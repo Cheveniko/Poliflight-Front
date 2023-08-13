@@ -1,22 +1,32 @@
-import { NgModule } from '@angular/core';
+import { NgModule, CUSTOM_ELEMENTS_SCHEMA  } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
+//Componentes
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { FormularioVueloComponent } from './formulario-vuelo/formulario-vuelo.component';
-import { FormularioPasajeroComponent } from './formulario-pasajero/formulario-pasajero.component';
+import { HomeComponent } from './home/home.component';
+import { NavbarComponent } from './shared/navbar/navbar.component';
+import { FooterComponent } from './shared/footer/footer.component';
+
+//Modulos
+import { FormularioModule } from './formulario/formulario.module';
+
 
 @NgModule({
   declarations: [
     AppComponent,
-    FormularioVueloComponent,
-    FormularioPasajeroComponent
+    HomeComponent,
+    NavbarComponent,
+    FooterComponent,
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+
+
   ],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA ]
 })
-export class AppModule { }
+export class AppModule {}
