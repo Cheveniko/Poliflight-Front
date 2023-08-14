@@ -25,7 +25,6 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
   declarations: [
     FormularioPasajeroComponent,
     FormularioVueloComponent,
-
   ],
   imports: [
     CommonModule,
