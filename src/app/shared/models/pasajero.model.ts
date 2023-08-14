@@ -1,9 +1,9 @@
-export class Pasajero{
-  constructor(
-    public nombre: string,
-    public apellido: string,
-    public nacionalidad: string,
-    public pasaporte: any,
-    public fechaNacimiento: Date,
-  ) {  }
+export interface Pasajeroinfo{
+    nombre: string,
+    apellido: string,
+    nacionalidad: string,
+    pasaporte: string,
+    fechaNacimiento: Date,
+    categoria: string,
 }
+

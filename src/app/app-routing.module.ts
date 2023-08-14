@@ -1,13 +1,14 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { HomeComponent } from './home/home.component';
-import { FormularioPasajeroComponent } from './formulario/formulario-pasajero/formulario-pasajero.component';
+import { FormularioPasajeroComponent } from './formularios/formulario-pasajero/formulario-pasajero.component';
+import { FormularioClienteComponent } from './formularios/formulario-cliente/formulario-cliente.component';
 
 const routes: Routes = [
   {path:'home', component:HomeComponent},
   {path: 'dato-pasajero', component: FormularioPasajeroComponent},
   //{path: '', redirectTo:'home'},
-  //{path: '**', redirectTo:'home'}
+  {path: '**', redirectTo:'home'}
 ];
 
 @NgModule({
