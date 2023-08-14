@@ -1,6 +1,7 @@
 export interface vueloBusqueda{
   origen: string,
-  destino: string;
+  destino: string,
+  fechaVuelo: Date,
   pasajero: pasajeroCantidad,
   totalPasajeros: number,
 }

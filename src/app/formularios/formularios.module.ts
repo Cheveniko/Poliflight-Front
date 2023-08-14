@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormularioPasajeroComponent } from './formulario-pasajero/formulario-pasajero.component';
-import { FormularioVueloComponent } from './formulario-vuelo/formulario-vuelo.component';
+import {FormularioVueloComponent } from './formulario-vuelo/formulario-vuelo.component';
 
 
 //Material UI
@@ -50,5 +50,9 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     NgFor,
     AsyncPipe,
   ],
+  exports: [
+    FormularioPasajeroComponent,
+    FormularioVueloComponent,
+  ]
 })
 export class FormulariosModule { }
