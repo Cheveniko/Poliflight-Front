@@ -8,6 +8,9 @@ import { HomeComponent } from './home/home.component';
 import { NavbarComponent } from './shared/navbar/navbar.component';
 import { FooterComponent } from './shared/footer/footer.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { VuelosComponent } from './vuelos/vuelos.component';
+import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { VuelosService } from './services/vuelos.service';
 
 @NgModule({
   declarations: [
@@ -15,15 +18,17 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     HomeComponent,
     NavbarComponent,
     FooterComponent,
+    VuelosComponent,
   ],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
     AppRoutingModule,
     FormulariosModule,
+    HttpClientModule,
 
   ],
-  providers: [],
+  providers: [VuelosService],
   bootstrap: [AppComponent],
   //schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
