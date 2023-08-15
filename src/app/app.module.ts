@@ -8,6 +8,11 @@ import { HomeComponent } from './home/home.component';
 import { NavbarComponent } from './shared/navbar/navbar.component';
 import { FooterComponent } from './shared/footer/footer.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { VuelosComponent } from './vuelos/vuelos.component';
+
+@NgModule({
+  declarations: [AppComponent, HomeComponent, NavbarComponent, FooterComponent, VuelosComponent],
 import { VuelosComponent } from './vuelos/vuelos.component';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { VuelosService } from './services/vuelos.service';
@@ -25,6 +30,7 @@ import { VuelosService } from './services/vuelos.service';
     BrowserAnimationsModule,
     AppRoutingModule,
     FormulariosModule,
+    FontAwesomeModule,
     HttpClientModule,
 
   ],
