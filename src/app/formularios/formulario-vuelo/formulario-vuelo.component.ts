@@ -4,7 +4,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDatepickerInputEvent } from '@angular/material/datepicker';
 import { Observable } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
-
+import { ActivatedRoute, Router } from '@angular/router';
 
 interface pasajeroCantidad {
   cantAdulto: number,
@@ -38,6 +38,7 @@ export class FormularioVueloComponent {
  opcionesFiltradas!: Observable<string[]>;
 
  constructor(private fb: FormBuilder,
+             private router: Router
   //private studentService: StudentService
   ) { }
  ngOnInit(): void {
@@ -83,10 +84,10 @@ export class FormularioVueloComponent {
    this.setValor('fechaVuelo', evento.value);
  }
 
- // Función para enviar el formulario y crear un objeto Pasajero
+ // Función para enviar el formulario de busqueda de vuelo y crear un objeto Vuelo
  enviarFormulario() {
     if (this.formulario.valid) {
-     // Crear un objeto Pasajero con los valores del formulario
+     // Crear un objeto vueloBusqueda con los valores del formulario
      const vuelo: vueloBusqueda = {
        origen: this.getValor('origen'),
        destino: this.getValor('destino'),
@@ -98,6 +99,7 @@ export class FormularioVueloComponent {
                  },
        totalPasajeros: this.getValor('adulto') + this.getValor('nino') + this.getValor('infante'),
      };
+     this.router.navigate(['/vuelos',vuelo]);
      // Mostrar el objeto Pasajero en la consola
      console.log(vuelo);
    } else {

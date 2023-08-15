@@ -13,14 +13,28 @@ import { VuelosComponent } from './vuelos/vuelos.component';
 
 @NgModule({
   declarations: [AppComponent, HomeComponent, NavbarComponent, FooterComponent, VuelosComponent],
+import { VuelosComponent } from './vuelos/vuelos.component';
+import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { VuelosService } from './services/vuelos.service';
+
+@NgModule({
+  declarations: [
+    AppComponent,
+    HomeComponent,
+    NavbarComponent,
+    FooterComponent,
+    VuelosComponent,
+  ],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
     AppRoutingModule,
     FormulariosModule,
     FontAwesomeModule,
+    HttpClientModule,
+
   ],
-  providers: [],
+  providers: [VuelosService],
   bootstrap: [AppComponent],
   //schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
