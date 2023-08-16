@@ -5,6 +5,8 @@ import { MatDatepickerInputEvent } from '@angular/material/datepicker';
 import { Observable } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
 import { ActivatedRoute, Router } from '@angular/router';
+import { Aeropuerto } from 'src/app/shared/models/aeropuerto.model';
+import { AeropuertosService } from 'src/app/services/aeropuertos.service';
 
 interface pasajeroCantidad {
   cantAdulto: number,
@@ -20,25 +22,28 @@ interface vueloBusqueda {
   totalPasajeros: number,
 }
 
-
 // Definir un array de opciones de aeropuertos
-const AEROPUERTOS: string[] = ['Guayaquil', 'Quito', 'Cuenca'];
 
 
 @Component({
   selector: 'app-formulario-vuelo',
   templateUrl: './formulario-vuelo.component.html',
-  styleUrls: ['./formulario-vuelo.component.scss']
+  styleUrls: ['./formulario-vuelo.component.scss'],
+  providers:[AeropuertosService]
 })
 export class FormularioVueloComponent {
 
+  airport: []
  // Crear un FormGroup para el formulario reactivo
  formulario!: FormGroup
  // Crear un Observable para el autocomplete de aeropuerto
  opcionesFiltradas!: Observable<string[]>;
+ aeropuertos:Aeropuerto[];
 
  constructor(private fb: FormBuilder,
-             private router: Router
+             private router: Router,
+             private _aeropuertoService: AeropuertosService
+
   //private studentService: StudentService
   ) { }
  ngOnInit(): void {
@@ -51,23 +56,39 @@ export class FormularioVueloComponent {
      nino: ['', Validators.required],
      infante: ['', Validators.required],
    });
+   console.log("INIT");
+   this._aeropuertoService.getAeropuertos().subscribe(
+    response=>{
+      this.aeropuertos=response;
+      // this.aeropuertos=response.map(e => e.nombre);
+      // this.aeropuertos.forEach(e =>{
+      //   this.airport.push();
+      // })
+  
+      console.log(this.aeropuertos);
+    },error=>{
+      console.log(<any>error);
+    });
 
-   // Filtrar las opciones de aeropuerto según el valor ingresado por el usuario
-   this.opcionesFiltradas = this.formulario.get('origen')!.valueChanges.pipe(
-     startWith(''),
-     map(value => this.filtrarOpciones(value))
-   );
-   this.opcionesFiltradas = this.formulario.get('destino')!.valueChanges.pipe(
-    startWith(''),
-    map(value => this.filtrarOpciones(value))
-  );
+
+    
+   console.log("INIT2");
+  // Filtrar las opciones de aeropuerto según el valor ingresado por el usuario
+  //  this.opcionesFiltradas = this.formulario.get('origen')!.valueChanges.pipe(
+  //    startWith(''),
+  //    map(value => this.filtrarOpciones(value))
+  //  );
+  //  this.opcionesFiltradas = this.formulario.get('destino')!.valueChanges.pipe(
+  //   startWith(''),
+  //   map(value => this.filtrarOpciones(value))
+  // );
  }
 
  // Función para filtrar las opciones de aeropuerto
- filtrarOpciones(value: string): string[] {
-   const filtro = value.toLowerCase();
-   return AEROPUERTOS.filter(opcion => opcion.toLowerCase().includes(filtro));
- }
+//  filtrarOpciones(value: string): string[] {
+//    const filtro = value.toLowerCase();
+//    return AEROPUERTOS.filter(opcion => opcion.toLowerCase().includes(filtro));
+//  }
 
  // Función para obtener el valor de un control del formulario
  getValor(control: string) {

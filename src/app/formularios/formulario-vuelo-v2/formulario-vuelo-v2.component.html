@@ -1,0 +1,37 @@
+<p>formulario-vuelo-v2 works!</p>
+<form #ventaForm="ngForm" (ngSubmit)="postBusqueda(ventaForm)">
+    <div>
+        <label for="origenF">Origen: </label>
+        <select type="text" name="origenF" #origenF="ngModel" [(ngModel)]="origen" (change)="selectOrigen($event)">
+            <option value="">...</option>
+            <option *ngFor="let lugar of origenes" value="{{lugar._id}}">{{lugar.Ciudad}}</option>
+        </select>
+    </div>
+    <div>
+        <label for="destinoF">Destino: </label>
+        <select type="text" name="destinoF" #destinoF="ngModel" [(ngModel)]="destino" (change)="selectOrigen($event)">
+            <option value="">...</option>
+            <option *ngFor="let lugar of destinos" value="{{lugar._id}}">{{lugar.Ciudad}}</option>
+        </select>
+    </div>
+    <div>
+        <label for="fechaF">Fecha: </label>
+        <input type="date" name="fechaF" #fechaF="ngModel" [(ngModel)]="fecha">
+    </div>
+    <input type="hidden" name="pasajerosF" #pasajerosF="ngModel" [(ngModel)]="pasajeros">
+    <div>
+        <label for="fechaF">Adultos: </label>
+        <input type="number" name="adultosF" #adultosF="ngModel" [(ngModel)]="pasajeros.adultos" (change)="escribir($event)">
+    </div>
+    <div>
+        <label for="fechaF">Niños: </label>
+        <input type="number" name="ninosF" #ninosF="ngModel" [(ngModel)]="pasajeros.ninos" >
+    </div>
+    <div>
+        <label for="fechaF">Infantes: </label>
+        <input type="number" name="infantesF" #infantesF="ngModel" [(ngModel)]="pasajeros.infantes">
+    </div>
+    <div class="text-center">
+        <input type="submit" [disabled]="!ventaForm.form.valid" value="ENVIAR" class="btn btn-primary">
+    </div>    
+</form>
