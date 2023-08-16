@@ -8,6 +8,7 @@ import { HomeComponent } from './home/home.component';
 import { NavbarComponent } from './shared/navbar/navbar.component';
 import { FooterComponent } from './shared/footer/footer.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { VuelosComponent } from './vuelos/vuelos.component';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { VuelosService } from './services/vuelos.service';
@@ -20,16 +21,17 @@ import { VuelosService } from './services/vuelos.service';
     FooterComponent,
     VuelosComponent,
   ],
+
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
     AppRoutingModule,
     FormulariosModule,
+    FontAwesomeModule,
     HttpClientModule,
-
   ],
   providers: [VuelosService],
   bootstrap: [AppComponent],
-  //schemas: [CUSTOM_ELEMENTS_SCHEMA],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
 export class AppModule {}
