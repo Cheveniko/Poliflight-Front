@@ -15,7 +15,7 @@
                     <div class="col-md-4">
                         <div>
                             <label for="destinoF">Destino: </label>
-                            <select class="form-control" type="text" name="destinoF" #destinoF="ngModel" [(ngModel)]="destino" (change)="selectOrigen($event)" >
+                            <select class="form-control" type="text" name="destinoF" #destinoF="ngModel" [(ngModel)]="destino" (change)="selectOrigen($event)" required>
                                 <option value="">...</option>
                                 <option *ngFor="let lugar of destinos" value="{{lugar._id}}">{{lugar.Ciudad}}</option>
                             </select>
@@ -24,32 +24,41 @@
                     <div class="col-md-4">
                         <div>
                             <label for="fechaF">Fecha: </label>
-                            <input class="form-control" type="date" name="fechaF" #fechaF="ngModel" [(ngModel)]="fecha" >
+                            <input class="form-control" type="date" name="fechaF" #fechaF="ngModel" [(ngModel)]="fecha" required>
                         </div>
                     </div>
                 </div>
-                
-                
-                
             </div>
             <div class="col-md-4">
                 <input type="hidden" name="pasajerosF" #pasajerosF="ngModel" [(ngModel)]="pasajeros">
-                <div>
+                <div *ngIf="errorPasajeros==-1 || errorPasajeros==2">
                     <label for="fechaF">Adultos: </label>
-                    <input class="form-control" type="number" name="adultosF" #adultosF="ngModel" [(ngModel)]="pasajeros.adultos" (change)="escribir($event)">
+                    <input class="form-control" type="number" name="adultosF" #adultosF="ngModel" [(ngModel)]="pasajeros.adultos" (change)="comprobarPasajeros($event)">
+                </div>
+                <div *ngIf="errorPasajeros==1">
+                    <label for="fechaF">Adultos: </label>
+                    <input class="form-control is-invalid" type="number" name="adultosF" #adultosF="ngModel" [(ngModel)]="pasajeros.adultos" (change)="comprobarPasajeros($event)">
+                    <div class="invalid-feedback"><small>Debe viajar al menos un adulto</small></div>
                 </div>
                 <div>
                     <label for="fechaF">Niños: </label>
-                    <input class="form-control" type="number" name="ninosF" #ninosF="ngModel" [(ngModel)]="pasajeros.ninos" >
+                    <input class="form-control" type="number" name="ninosF" #ninosF="ngModel" [(ngModel)]="pasajeros.ninos" (change)="comprobarPasajeros($event)">
                 </div>
-                <div>
+                <div *ngIf="errorPasajeros==-1 || errorPasajeros==1">
                     <label for="fechaF">Infantes: </label>
-                    <input class="form-control" type="number" name="infantesF" #infantesF="ngModel" [(ngModel)]="pasajeros.infantes">
-                </div>                
+                    <input class="form-control" type="number" name="infantesF" #infantesF="ngModel" [(ngModel)]="pasajeros.infantes" (change)="comprobarPasajeros($event)">
+                </div>  
+                <div *ngIf="errorPasajeros==2">
+                    <label for="fechaF">Infantes: </label>
+                    <input class="form-control is-invalid" type="number" name="infantesF" #infantesF="ngModel" [(ngModel)]="pasajeros.infantes" (change)="comprobarPasajeros($event)">
+                    <div class="invalid-feedback">El numero de infantes no puede ser mayor al numero de adultos</div>           
+                </div>     
+                           
+                
             </div>
         </div>
         <div class="text-center">
-            <input type="submit" [disabled]="!ventaForm.form.valid" value="BUSCAR VUELO" class="btn btn-primary">
+            <input type="submit" [disabled]="!ventaForm.form.valid || errorPasajeros!=-1" value="BUSCAR VUELO" class="btn btn-primary">
         </div>          
     </form>
     <br>
@@ -70,6 +79,7 @@
                 </div>
                 <div class="col-md-8 text-end">
                     <h1>$ {{vuelo.precio}}</h1>
+                    <a class="btn btn-success" href="/datos-pasajero/{{vuelo._id}}">Comprar</a>
                 </div>
             </div>
             <div class="row">

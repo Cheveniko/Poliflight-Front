@@ -6,7 +6,7 @@ import { VuelosComponent } from './vuelos/vuelos.component';
 
 const routes: Routes = [
   {path:'home', component:HomeComponent},
-  {path: 'dato-pasajero', component: FormularioPasajeroComponent},
+  {path: 'datos-pasajero/:id', component: FormularioPasajeroComponent},
   {path: 'vuelos', component: VuelosComponent},
 
   //{path: '', redirectTo:'home'},

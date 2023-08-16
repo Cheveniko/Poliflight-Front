@@ -14,6 +14,7 @@ import { NgModel } from '@angular/forms';
   providers:[AeropuertosService, VuelosService]
 })
 export class FormularioVueloV2Component {
+  public errorPasajeros:Number;
   public origen:string;
   public destino:string;
   public fecha:string;
@@ -36,7 +37,8 @@ export class FormularioVueloV2Component {
   this.destino="";
   this.origen="";
   this.fecha="";
-  this.pasajeros={adultos:0, ninos:0, infantes:0};
+  this.pasajeros={adultos:1, ninos:0, infantes:0};
+  this.errorPasajeros=-1;
 }
 ngOnInit(): void {
 // Inicializar el FormGroup con los controles y validadores correspondientes
@@ -109,8 +111,19 @@ selectDestino(value:any){
   // this.origen="";
   // this.destino="";
 }
-escribir(value:any){
-  console.log(value);
+comprobarPasajeros(value:any){
+  if (this.pasajeros.adultos<=0){
+    this.errorPasajeros=1;
+  }
+  else{
+    if (this.pasajeros.infantes>this.pasajeros.adultos){
+      this.errorPasajeros=2;
+    }
+    else{
+      this.errorPasajeros=-1;
+    }
+  }
+  console.log(this.errorPasajeros);
 }
 postBusqueda(form:NgForm){
   // console.log(form);
