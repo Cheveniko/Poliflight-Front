@@ -21,6 +21,7 @@ export class FormularioVueloV2Component {
   public adultos:number;
   public niños:number;
   public infantes:number;
+  vuelos:any[];
   aeropuertos:any;
   lugares:any[];
   origenes:any[];
@@ -119,11 +120,18 @@ postBusqueda(form:NgForm){
     fechaVuelo:this.fecha,
     pasajero:this.pasajeros
   }
+  sessionStorage.setItem('adultos',this.pasajeros.adultos);
+  sessionStorage.setItem('ninos',this.pasajeros.ninos);
+  sessionStorage.setItem('infantes',this.pasajeros.infantes);
   this._vueloService.buscarVuelos(formEnvio).subscribe(
     response=>{
-        console.log(response);
+        console.log(response.result);
+        this.vuelos=response.result;
       },error=>{
       console.log(<any>error);
       });
+}
+cambiarFecha(value:any){
+  this.fecha='algo';
 }
 }

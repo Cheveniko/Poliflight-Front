@@ -11,33 +11,6 @@ import { AeropuertoService } from '../services/aeropuerto.service';
   templateUrl: './vuelos.component.html',
   styleUrls: ['./vuelos.component.scss'],
 })
-<<<<<<< HEAD
-export class VuelosComponent implements OnInit, OnDestroy{
-
-
-
-  vuelosListaSubs: Subscription;
-  vuelosLista: Vuelo[];
-
-  constructor(private route: ActivatedRoute,
-              private VuelosService: VuelosService,
-              private aeropuertoService: AeropuertoService
-    ) { }
-
-  ngOnInit(): void {
-    // this.vuelosListaSubs = this.VuelosService
-    //   .getVuelos()
-    //   .subscribe( res => {
-    //     this.vuelosLista = res
-    //     console.log(this.vuelosLista)
-    //   },
-
-      // console.error
-      // );
-
-
-
-=======
 export class VuelosComponent implements OnInit, OnDestroy {
   vuelosListaSubs: Subscription;
   vuelosLista: Vuelo[];
@@ -53,7 +26,6 @@ export class VuelosComponent implements OnInit, OnDestroy {
     }, console.error);
     let datos = this.route.snapshot.params;
     console.log(datos);
->>>>>>> origin/master
   }
 
   ngOnDestroy(): void {

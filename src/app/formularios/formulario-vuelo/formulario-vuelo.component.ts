@@ -40,7 +40,7 @@ export class FormularioVueloComponent {
  // Crear un Observable para el autocomplete de aeropuerto
  opcionesFiltradas!: Observable<string[]>;
  aeropuertoListaSubs: Subscription;
- nombreAeropuerto: Aeropuerto;
+ nombreAeropuerto: any[];
  nombreAeropuertoLista: Aeropuerto[]
 
 
@@ -63,12 +63,17 @@ export class FormularioVueloComponent {
    this.aeropuertoListaSubs = this.aeropuertoService
   .GetNombresAeropuertos()
   .subscribe(res => {
-    this.nombreAeropuerto = res
+    this.nombreAeropuerto = res.Aeropuertos;
+    console.log(this.nombreAeropuerto);
     const str = JSON.stringify(res);
-    JSON.parse(str, (key, value) => {
-    if (key === 'Ciudad') {
-      nombreAeropuertos.push(value);
-    }});
+    for(let i=0;i<this.nombreAeropuerto.length;i++){
+      nombreAeropuertos.push(this.nombreAeropuerto[i]);
+    }
+    // JSON.parse(str, (key, value) => {
+    //   console.log(key);
+    // if (key === 'Ciudad') {
+    //   nombreAeropuertos.push(value);
+    // }});
     console.log(nombreAeropuertos)
    },
    console.error

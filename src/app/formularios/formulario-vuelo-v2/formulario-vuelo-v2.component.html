@@ -1,37 +1,81 @@
-<p>formulario-vuelo-v2 works!</p>
-<form #ventaForm="ngForm" (ngSubmit)="postBusqueda(ventaForm)">
-    <div>
-        <label for="origenF">Origen: </label>
-        <select type="text" name="origenF" #origenF="ngModel" [(ngModel)]="origen" (change)="selectOrigen($event)">
-            <option value="">...</option>
-            <option *ngFor="let lugar of origenes" value="{{lugar._id}}">{{lugar.Ciudad}}</option>
-        </select>
+<div class="card bg-light p-4" style="--bs-bg-opacity: .5; min-width:75%;">
+    <form #ventaForm="ngForm" (ngSubmit)="postBusqueda(ventaForm)">
+        <div class="row">
+            <div class="col-md-8 p-auto">
+                <div class="row mt-3">
+                    <div class="col-md-4">
+                        <div>
+                            <label for="origenF">Origen: </label>
+                            <select class="form-control" type="text" name="origenF" #origenF="ngModel" [(ngModel)]="origen" (change)="selectOrigen($event)" required>
+                                <option value="">...</option>
+                                <option *ngFor="let lugar of origenes" value="{{lugar._id}}">{{lugar.Ciudad}}</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div>
+                            <label for="destinoF">Destino: </label>
+                            <select class="form-control" type="text" name="destinoF" #destinoF="ngModel" [(ngModel)]="destino" (change)="selectOrigen($event)" >
+                                <option value="">...</option>
+                                <option *ngFor="let lugar of destinos" value="{{lugar._id}}">{{lugar.Ciudad}}</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div>
+                            <label for="fechaF">Fecha: </label>
+                            <input class="form-control" type="date" name="fechaF" #fechaF="ngModel" [(ngModel)]="fecha" >
+                        </div>
+                    </div>
+                </div>
+                
+                
+                
+            </div>
+            <div class="col-md-4">
+                <input type="hidden" name="pasajerosF" #pasajerosF="ngModel" [(ngModel)]="pasajeros">
+                <div>
+                    <label for="fechaF">Adultos: </label>
+                    <input class="form-control" type="number" name="adultosF" #adultosF="ngModel" [(ngModel)]="pasajeros.adultos" (change)="escribir($event)">
+                </div>
+                <div>
+                    <label for="fechaF">Niños: </label>
+                    <input class="form-control" type="number" name="ninosF" #ninosF="ngModel" [(ngModel)]="pasajeros.ninos" >
+                </div>
+                <div>
+                    <label for="fechaF">Infantes: </label>
+                    <input class="form-control" type="number" name="infantesF" #infantesF="ngModel" [(ngModel)]="pasajeros.infantes">
+                </div>                
+            </div>
+        </div>
+        <div class="text-center">
+            <input type="submit" [disabled]="!ventaForm.form.valid" value="BUSCAR VUELO" class="btn btn-primary">
+        </div>          
+    </form>
+    <br>
+    <br>
+    <div class="container" style="--bs-bg-opacity: .5; min-width:75%;">
+        <div class="card boleto-card" style="margin-top:10px; padding:20px;" *ngFor="let vuelo of vuelos">
+            <div class="row">
+                <div class="col-md-2">
+                    <h2>{{vuelo.lugar_origen_id.Ciudad}}</h2>
+                    <h4>{{vuelo.lugar_origen_id.nombreAeropuerto}}</h4>
+                </div>
+                <!-- <div class="col-md-2">
+                    <i class="fa-light fa-plane"></i>
+                </div> -->
+                <div class="col-md-2">
+                    <h2>{{vuelo.lugar_destino_id.Ciudad}}</h2>
+                    <h4>{{vuelo.lugar_destino_id.nombreAeropuerto}}</h4>
+                </div>
+                <div class="col-md-8 text-end">
+                    <h1>$ {{vuelo.precio}}</h1>
+                </div>
+            </div>
+            <div class="row">
+                <h5>Distancia aproximada: {{vuelo.distancia_KM}} KM</h5>
+            </div>
+        </div>        
     </div>
-    <div>
-        <label for="destinoF">Destino: </label>
-        <select type="text" name="destinoF" #destinoF="ngModel" [(ngModel)]="destino" (change)="selectOrigen($event)">
-            <option value="">...</option>
-            <option *ngFor="let lugar of destinos" value="{{lugar._id}}">{{lugar.Ciudad}}</option>
-        </select>
-    </div>
-    <div>
-        <label for="fechaF">Fecha: </label>
-        <input type="date" name="fechaF" #fechaF="ngModel" [(ngModel)]="fecha">
-    </div>
-    <input type="hidden" name="pasajerosF" #pasajerosF="ngModel" [(ngModel)]="pasajeros">
-    <div>
-        <label for="fechaF">Adultos: </label>
-        <input type="number" name="adultosF" #adultosF="ngModel" [(ngModel)]="pasajeros.adultos" (change)="escribir($event)">
-    </div>
-    <div>
-        <label for="fechaF">Niños: </label>
-        <input type="number" name="ninosF" #ninosF="ngModel" [(ngModel)]="pasajeros.ninos" >
-    </div>
-    <div>
-        <label for="fechaF">Infantes: </label>
-        <input type="number" name="infantesF" #infantesF="ngModel" [(ngModel)]="pasajeros.infantes">
-    </div>
-    <div class="text-center">
-        <input type="submit" [disabled]="!ventaForm.form.valid" value="ENVIAR" class="btn btn-primary">
-    </div>    
-</form>
+</div>
+

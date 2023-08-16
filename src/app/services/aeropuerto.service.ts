@@ -24,9 +24,9 @@ export class AeropuertoService {
   //   );
   // }
 
-  GetNombresAeropuertos(): Observable<Aeropuerto> {
+  GetNombresAeropuertos(): Observable<any> {
     return this.http
-      .get<Aeropuerto>(`${API_URL}/aeropuertos`)
+      .get(`${API_URL}/aeropuertos`)
       .pipe(retry(1), catchError(AeropuertoService._handleError));
   }
 

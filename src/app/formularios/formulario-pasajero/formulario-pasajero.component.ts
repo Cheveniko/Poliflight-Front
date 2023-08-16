@@ -26,14 +26,22 @@ const NACIONALIDADES: string[] = ['Ecuador', 'Colombia', 'Perú', 'Argentina', '
 export class FormularioPasajeroComponent {
   // Crear un FormGroup para el formulario reactivo
   formulario!: FormGroup
-
+  public adultosF:any[];
+  public ninosF:any[];
+  public infantesF:any[];
   // Crear un Observable para el autocomplete de nacionalidad
   opcionesFiltradas!: Observable<string[]>;
 
-  constructor(private fb: FormBuilder) { }
+  constructor(private fb: FormBuilder) { 
+    this.adultosF=[];
+    this.ninosF=[];
+    this.infantesF=[];
+    this.getSession();
+  }
 
   ngOnInit(): void {
     // Inicializar el FormGroup con los controles y validadores correspondientes
+    
     this.formulario = this.fb.group({
       nombre: ['', Validators.required],
       apellido: ['', Validators.required],
@@ -41,6 +49,7 @@ export class FormularioPasajeroComponent {
       nacionalidad: ['', Validators.required],
       pasaporte: ['', Validators.required]
     });
+
 
     // Filtrar las opciones de nacionalidad según el valor ingresado por el usuario
     this.opcionesFiltradas = this.formulario.get('nacionalidad')!.valueChanges.pipe(
@@ -88,6 +97,19 @@ export class FormularioPasajeroComponent {
       alert('Por favor, complete todos los campos del formulario');
     }
   }
-
+  getSession(){
+    let adultos = Number(sessionStorage.getItem('adultos'));
+    let ninos = Number(sessionStorage.getItem('ninos'));
+    let infantes = Number(sessionStorage.getItem('infantes'));
+    for(let i=0; i<adultos;i++){
+      this.adultosF.push({code:1});
+    }
+    for(let i=0; i<ninos;i++){
+      this.ninosF.push({code:2});
+    }
+    for(let i=0; i<infantes;i++){
+      this.infantesF.push({code:3});
+    }
+  }
 
 }

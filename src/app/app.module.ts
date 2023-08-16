@@ -12,6 +12,7 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { VuelosComponent } from './vuelos/vuelos.component';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { VuelosService } from './services/vuelos.service';
+import { RegistroComponent } from './registro/registro.component';
 
 @NgModule({
   declarations: [
@@ -20,6 +21,7 @@ import { VuelosService } from './services/vuelos.service';
     NavbarComponent,
     FooterComponent,
     VuelosComponent,
+    RegistroComponent,
   ],
 
   imports: [

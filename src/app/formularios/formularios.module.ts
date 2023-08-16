@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormularioPasajeroComponent } from './formulario-pasajero/formulario-pasajero.component';
 import {FormularioVueloComponent } from './formulario-vuelo/formulario-vuelo.component';
+import { FormularioVueloV2Component } from './formulario-vuelo-v2/formulario-vuelo-v2.component';
 
 
 //Material UI
@@ -26,6 +27,7 @@ import { AeropuertoService } from '../services/aeropuerto.service';
   declarations: [
     FormularioPasajeroComponent,
     FormularioVueloComponent,
+    FormularioVueloV2Component
   ],
   imports: [
     CommonModule,
@@ -54,11 +56,13 @@ import { AeropuertoService } from '../services/aeropuerto.service';
   exports: [
     FormularioPasajeroComponent,
     FormularioVueloComponent,
+    FormularioVueloV2Component
   ],
   providers: [
     AeropuertoService,
     FormularioPasajeroComponent,
     FormularioVueloComponent,
+    FormularioVueloV2Component
   ],
 })
 export class FormulariosModule { }
