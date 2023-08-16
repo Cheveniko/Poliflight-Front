@@ -3,6 +3,8 @@ import { ActivatedRoute } from '@angular/router';
 import { Observable, Subscription } from 'rxjs';
 import { VuelosService } from '../services/vuelos.service';
 import { Vuelo } from '../shared/models/vuelo.model';
+import { Aeropuerto } from '../shared/models/aeropuerto.model';
+import { AeropuertoService } from '../services/aeropuerto.service';
 
 @Component({
   selector: 'app-vuelos',
@@ -11,23 +13,29 @@ import { Vuelo } from '../shared/models/vuelo.model';
 })
 export class VuelosComponent implements OnInit, OnDestroy{
 
+
+
   vuelosListaSubs: Subscription;
   vuelosLista: Vuelo[];
 
   constructor(private route: ActivatedRoute,
-    private vuelosAPI: VuelosService
+              private VuelosService: VuelosService,
+              private aeropuertoService: AeropuertoService
     ) { }
 
   ngOnInit(): void {
-    this.vuelosListaSubs = this.vuelosAPI
-      .getVuelos()
-      .subscribe( res => {
-        this.vuelosLista = res
-      },
-      console.error
-      );
-    let datos = this.route.snapshot.params;
-    console.log(datos);
+    // this.vuelosListaSubs = this.VuelosService
+    //   .getVuelos()
+    //   .subscribe( res => {
+    //     this.vuelosLista = res
+    //     console.log(this.vuelosLista)
+    //   },
+
+      // console.error
+      // );
+
+
+
   }
 
   ngOnDestroy(): void {

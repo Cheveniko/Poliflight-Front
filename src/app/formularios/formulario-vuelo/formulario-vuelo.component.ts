@@ -2,9 +2,11 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDatepickerInputEvent } from '@angular/material/datepicker';
-import { Observable } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
 import { ActivatedRoute, Router } from '@angular/router';
+import { Aeropuerto } from 'src/app/shared/models/aeropuerto.model';
+import { AeropuertoService } from '../../services/aeropuerto.service';
 
 interface pasajeroCantidad {
   cantAdulto: number,
@@ -22,7 +24,7 @@ interface vueloBusqueda {
 
 
 // Definir un array de opciones de aeropuertos
-const AEROPUERTOS: string[] = ['Guayaquil', 'Quito', 'Cuenca'];
+let nombreAeropuertos: string[] = [];
 
 
 @Component({
@@ -36,9 +38,14 @@ export class FormularioVueloComponent {
  formulario!: FormGroup
  // Crear un Observable para el autocomplete de aeropuerto
  opcionesFiltradas!: Observable<string[]>;
+ aeropuertoListaSubs: Subscription;
+ nombreAeropuerto: Aeropuerto;
+ nombreAeropuertoLista: Aeropuerto[]
+
 
  constructor(private fb: FormBuilder,
-             private router: Router
+             private router: Router,
+             private aeropuertoService: AeropuertoService
   //private studentService: StudentService
   ) { }
  ngOnInit(): void {
@@ -52,6 +59,20 @@ export class FormularioVueloComponent {
      infante: ['', Validators.required],
    });
 
+
+  this.aeropuertoListaSubs = this.aeropuertoService
+  .GetNombresAeropuertos()
+  .subscribe(res => {
+    this.nombreAeropuerto = res
+    const str = JSON.stringify(res);
+    JSON.parse(str, (key, value) => {
+    if (key === 'Ciudad') {
+      nombreAeropuertos.push(value);
+    }});
+    console.log(nombreAeropuertos)
+   },
+   console.error
+   );
    // Filtrar las opciones de aeropuerto según el valor ingresado por el usuario
    this.opcionesFiltradas = this.formulario.get('origen')!.valueChanges.pipe(
      startWith(''),
@@ -66,7 +87,7 @@ export class FormularioVueloComponent {
  // Función para filtrar las opciones de aeropuerto
  filtrarOpciones(value: string): string[] {
    const filtro = value.toLowerCase();
-   return AEROPUERTOS.filter(opcion => opcion.toLowerCase().includes(filtro));
+   return nombreAeropuertos.filter(opcion => opcion.toLowerCase().includes(filtro));
  }
 
  // Función para obtener el valor de un control del formulario
@@ -83,6 +104,7 @@ export class FormularioVueloComponent {
  cambiarFecha(evento: MatDatepickerInputEvent<Date>) {
    this.setValor('fechaVuelo', evento.value);
  }
+
 
  // Función para enviar el formulario de busqueda de vuelo y crear un objeto Vuelo
  enviarFormulario() {
