@@ -21,12 +21,11 @@ import {NgFor, AsyncPipe} from '@angular/common';
 import {MatAutocompleteModule} from '@angular/material/autocomplete';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { FormularioVueloV2Component } from './formulario-vuelo-v2/formulario-vuelo-v2.component';
+import { AeropuertoService } from '../services/aeropuerto.service';
 @NgModule({
   declarations: [
     FormularioPasajeroComponent,
     FormularioVueloComponent,
-    FormularioVueloV2Component,
   ],
   imports: [
     CommonModule,
@@ -55,7 +54,11 @@ import { FormularioVueloV2Component } from './formulario-vuelo-v2/formulario-vue
   exports: [
     FormularioPasajeroComponent,
     FormularioVueloComponent,
-    FormularioVueloV2Component
-  ]
+  ],
+  providers: [
+    AeropuertoService,
+    FormularioPasajeroComponent,
+    FormularioVueloComponent,
+  ],
 })
 export class FormulariosModule { }

@@ -2,11 +2,11 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDatepickerInputEvent } from '@angular/material/datepicker';
-import { Observable } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Aeropuerto } from 'src/app/shared/models/aeropuerto.model';
-import { AeropuertosService } from 'src/app/services/aeropuertos.service';
+import { AeropuertoService } from '../../services/aeropuerto.service';
 
 interface pasajeroCantidad {
   cantAdulto: number,
@@ -23,13 +23,14 @@ interface vueloBusqueda {
 }
 
 // Definir un array de opciones de aeropuertos
+let nombreAeropuertos: string[] = [];
 
 
 @Component({
   selector: 'app-formulario-vuelo',
   templateUrl: './formulario-vuelo.component.html',
   styleUrls: ['./formulario-vuelo.component.scss'],
-  providers:[AeropuertosService]
+  providers:[AeropuertoService]
 })
 export class FormularioVueloComponent {
 
@@ -38,12 +39,14 @@ export class FormularioVueloComponent {
  formulario!: FormGroup
  // Crear un Observable para el autocomplete de aeropuerto
  opcionesFiltradas!: Observable<string[]>;
- aeropuertos:Aeropuerto[];
+ aeropuertoListaSubs: Subscription;
+ nombreAeropuerto: Aeropuerto;
+ nombreAeropuertoLista: Aeropuerto[]
+
 
  constructor(private fb: FormBuilder,
              private router: Router,
-             private _aeropuertoService: AeropuertosService
-
+             private aeropuertoService: AeropuertoService
   //private studentService: StudentService
   ) { }
  ngOnInit(): void {
@@ -57,38 +60,35 @@ export class FormularioVueloComponent {
      infante: ['', Validators.required],
    });
    console.log("INIT");
-   this._aeropuertoService.getAeropuertos().subscribe(
-    response=>{
-      this.aeropuertos=response;
-      // this.aeropuertos=response.map(e => e.nombre);
-      // this.aeropuertos.forEach(e =>{
-      //   this.airport.push();
-      // })
-  
-      console.log(this.aeropuertos);
-    },error=>{
-      console.log(<any>error);
-    });
-
-
-    
-   console.log("INIT2");
-  // Filtrar las opciones de aeropuerto según el valor ingresado por el usuario
-  //  this.opcionesFiltradas = this.formulario.get('origen')!.valueChanges.pipe(
-  //    startWith(''),
-  //    map(value => this.filtrarOpciones(value))
-  //  );
-  //  this.opcionesFiltradas = this.formulario.get('destino')!.valueChanges.pipe(
-  //   startWith(''),
-  //   map(value => this.filtrarOpciones(value))
-  // );
+   this.aeropuertoListaSubs = this.aeropuertoService
+  .GetNombresAeropuertos()
+  .subscribe(res => {
+    this.nombreAeropuerto = res
+    const str = JSON.stringify(res);
+    JSON.parse(str, (key, value) => {
+    if (key === 'Ciudad') {
+      nombreAeropuertos.push(value);
+    }});
+    console.log(nombreAeropuertos)
+   },
+   console.error
+   );
+   // Filtrar las opciones de aeropuerto según el valor ingresado por el usuario
+   this.opcionesFiltradas = this.formulario.get('origen')!.valueChanges.pipe(
+     startWith(''),
+     map(value => this.filtrarOpciones(value))
+   );
+   this.opcionesFiltradas = this.formulario.get('destino')!.valueChanges.pipe(
+    startWith(''),
+    map(value => this.filtrarOpciones(value))
+  );
  }
 
  // Función para filtrar las opciones de aeropuerto
-//  filtrarOpciones(value: string): string[] {
-//    const filtro = value.toLowerCase();
-//    return AEROPUERTOS.filter(opcion => opcion.toLowerCase().includes(filtro));
-//  }
+ filtrarOpciones(value: string): string[] {
+   const filtro = value.toLowerCase();
+   return nombreAeropuertos.filter(opcion => opcion.toLowerCase().includes(filtro));
+ }
 
  // Función para obtener el valor de un control del formulario
  getValor(control: string) {
@@ -104,6 +104,7 @@ export class FormularioVueloComponent {
  cambiarFecha(evento: MatDatepickerInputEvent<Date>) {
    this.setValor('fechaVuelo', evento.value);
  }
+
 
  // Función para enviar el formulario de busqueda de vuelo y crear un objeto Vuelo
  enviarFormulario() {
