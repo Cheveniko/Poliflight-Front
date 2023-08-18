@@ -30,21 +30,27 @@ export class FormularioVueloV2Component {
   lugares:any[];
   origenes:any[];
   destinos:any[];
+  datePipe: any;
+  today : any;
+  maxDate : any;
   constructor(private fb: FormBuilder,
     private router: Router,
     private _aeropuertoService: AeropuertosService,
     private _vueloService: VuelosService
 
 //private studentService: StudentService
-) { 
+) {
   this.destino="";
   this.origen="";
   this.fecha="";
+  this.today = new Date().toISOString().split('T')[0];
+  this.maxDate = new Date(new Date().getTime() + 360 * 24 * 60 * 60 * 1012).toISOString().split('T')[0]
   this.pasajeros={adultos:1, ninos:0, infantes:0};
   this.errorPasajeros=-1;
   this.max_adultos=10;
   this.max_ninos=9;
   this.max_infantes=5;
+
 }
 ngOnInit(): void {
 // Inicializar el FormGroup con los controles y validadores correspondientes
@@ -56,6 +62,7 @@ ngOnInit(): void {
 // nino: ['', Validators.required],
 // infante: ['', Validators.required],
 // });
+
 this._aeropuertoService.getAeropuertos().subscribe(
 response=>{
 this.aeropuertos=response;
@@ -97,8 +104,8 @@ selectOrigen(value:any){
     this.destinos.splice(indexO,1);
   }
   if (indexD!=-1){
-    this.origenes.splice(indexD,1);  
-  } 
+    this.origenes.splice(indexD,1);
+  }
   // this.origen="";
   // this.destino="";
 }
@@ -113,7 +120,7 @@ selectDestino(value:any){
     }
   }
   this.origenes.splice(index,1);
-  // this.origenes.splice(index,1);  
+  // this.origenes.splice(index,1);
   // this.origen="";
   // this.destino="";
 }
@@ -136,7 +143,7 @@ comprobarPasajeros(value:any){
       this.max_infantes=this.pasajeros.adultos;
     }
   }else{
-    this.max_infantes=10 - this.pasajeros.adultos - this.pasajeros.ninos;  
+    this.max_infantes=10 - this.pasajeros.adultos - this.pasajeros.ninos;
   }
   // console.log(this.max_pasajeros);
   // console.log(this.errorPasajeros);
@@ -163,4 +170,7 @@ postBusqueda(form:NgForm){
 cambiarFecha(value:any){
   this.fecha='algo';
 }
+
+
+
 }
