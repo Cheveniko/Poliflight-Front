@@ -33,24 +33,24 @@
                 <input type="hidden" name="pasajerosF" #pasajerosF="ngModel" [(ngModel)]="pasajeros">
                 <div *ngIf="errorPasajeros==-1 || errorPasajeros==2">
                     <label for="fechaF">Adultos: </label>
-                    <input class="form-control" type="number" name="adultosF" #adultosF="ngModel" [(ngModel)]="pasajeros.adultos" (change)="comprobarPasajeros($event)">
+                    <input class="form-control" type="number" name="adultosF" #adultosF="ngModel" [(ngModel)]="pasajeros.adultos" (change)="comprobarPasajeros($event)" max="{{max_adultos}}">
                 </div>
                 <div *ngIf="errorPasajeros==1">
                     <label for="fechaF">Adultos: </label>
-                    <input class="form-control is-invalid" type="number" name="adultosF" #adultosF="ngModel" [(ngModel)]="pasajeros.adultos" (change)="comprobarPasajeros($event)">
+                    <input class="form-control is-invalid" type="number" name="adultosF" #adultosF="ngModel" [(ngModel)]="pasajeros.adultos" (change)="comprobarPasajeros($event)" max="{{max_adultos}}">
                     <div class="invalid-feedback"><small>Debe viajar al menos un adulto</small></div>
                 </div>
                 <div>
                     <label for="fechaF">Niños: </label>
-                    <input class="form-control" type="number" name="ninosF" #ninosF="ngModel" [(ngModel)]="pasajeros.ninos" (change)="comprobarPasajeros($event)">
+                    <input class="form-control" type="number" name="ninosF" #ninosF="ngModel" [(ngModel)]="pasajeros.ninos" (change)="comprobarPasajeros($event)" max="{{max_ninos}}">
                 </div>
                 <div *ngIf="errorPasajeros==-1 || errorPasajeros==1">
                     <label for="fechaF">Infantes: </label>
-                    <input class="form-control" type="number" name="infantesF" #infantesF="ngModel" [(ngModel)]="pasajeros.infantes" (change)="comprobarPasajeros($event)">
+                    <input class="form-control" type="number" name="infantesF" #infantesF="ngModel" [(ngModel)]="pasajeros.infantes" (change)="comprobarPasajeros($event)" max="{{max_infantes}}">
                 </div>  
                 <div *ngIf="errorPasajeros==2">
                     <label for="fechaF">Infantes: </label>
-                    <input class="form-control is-invalid" type="number" name="infantesF" #infantesF="ngModel" [(ngModel)]="pasajeros.infantes" (change)="comprobarPasajeros($event)">
+                    <input class="form-control is-invalid" type="number" name="infantesF" #infantesF="ngModel" [(ngModel)]="pasajeros.infantes" (change)="comprobarPasajeros($event)" max="{{max_infantes}}">
                     <div class="invalid-feedback">El numero de infantes no puede ser mayor al numero de adultos</div>           
                 </div>     
                            

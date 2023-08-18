@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { Aeropuerto } from 'src/app/shared/models/aeropuerto.model';
 import { AeropuertosService } from 'src/app/services/aeropuertos.service';
 import { VuelosService } from 'src/app/services/vuelos.service';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { FormBuilder } from '@angular/forms';
 import { NgForm } from '@angular/forms';
 import { NgModel } from '@angular/forms';
@@ -22,6 +22,9 @@ export class FormularioVueloV2Component {
   public adultos:number;
   public niños:number;
   public infantes:number;
+  public max_adultos:number;
+  public max_ninos:number;
+  public max_infantes:number;
   vuelos:any[];
   aeropuertos:any;
   lugares:any[];
@@ -39,6 +42,9 @@ export class FormularioVueloV2Component {
   this.fecha="";
   this.pasajeros={adultos:1, ninos:0, infantes:0};
   this.errorPasajeros=-1;
+  this.max_adultos=10;
+  this.max_ninos=9;
+  this.max_infantes=5;
 }
 ngOnInit(): void {
 // Inicializar el FormGroup con los controles y validadores correspondientes
@@ -123,7 +129,17 @@ comprobarPasajeros(value:any){
       this.errorPasajeros=-1;
     }
   }
-  console.log(this.errorPasajeros);
+  this.max_adultos=10-this.pasajeros.ninos-this.pasajeros.infantes;
+  this.max_ninos=10-this.pasajeros.adultos-this.pasajeros.infantes;
+  if (this.pasajeros.adultos+this.pasajeros.ninos+this.pasajeros.infantes<10){
+    if (10-(this.pasajeros.adultos+this.pasajeros.ninos+this.pasajeros.infantes)>=this.pasajeros.adultos){
+      this.max_infantes=this.pasajeros.adultos;
+    }
+  }else{
+    this.max_infantes=10 - this.pasajeros.adultos - this.pasajeros.ninos;  
+  }
+  // console.log(this.max_pasajeros);
+  // console.log(this.errorPasajeros);
 }
 postBusqueda(form:NgForm){
   // console.log(form);
