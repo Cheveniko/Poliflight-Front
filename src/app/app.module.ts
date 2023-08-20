@@ -13,6 +13,7 @@ import { VuelosComponent } from './vuelos/vuelos.component';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { VuelosService } from './services/vuelos.service';
 import { RegistroComponent } from './registro/registro.component';
+import { AsientosComponent } from './asientos/asientos.component';
 
 @NgModule({
   declarations: [
@@ -22,6 +23,7 @@ import { RegistroComponent } from './registro/registro.component';
     FooterComponent,
     VuelosComponent,
     RegistroComponent,
+    AsientosComponent,
   ],
 
   imports: [
