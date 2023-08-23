@@ -4,12 +4,14 @@ import { HomeComponent } from './home/home.component';
 import { FormularioPasajeroComponent } from './formularios/formulario-pasajero/formulario-pasajero.component';
 import { VuelosComponent } from './vuelos/vuelos.component';
 import { AsientosComponent } from './asientos/asientos.component';
+import { PagoComponent } from './pago/pago.component';
 
 const routes: Routes = [
   {path:'home', component:HomeComponent},
   {path: 'datos-pasajero/:id', component: FormularioPasajeroComponent},
   {path: 'vuelos', component: VuelosComponent},
   {path: 'asientos', component: AsientosComponent},
+  {path: 'pago', component: PagoComponent},
 
   //{path: '', redirectTo:'home'},
   {path: '**', redirectTo:'home'}
