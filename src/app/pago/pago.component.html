@@ -1,2 +1,15 @@
-<p>pago works!</p>
-<ngx-paypal [config]="payPalConfig"></ngx-paypal>
+<button *ngIf="!showPaypalButtons" (click)="pay()">Pagar con paypal</button>
+ 
+ 
+<ngx-paypal *ngIf="showPaypalButtons" [config]="payPalConfig">
+</ngx-paypal>
+<!-- <button *ngIf="showPaypalButtons" (click)="back()">Volver atras</button> -->
+
+
+<p *ngIf="showSuccess" class="text-success mt-3">
+    PAGO EXITOSO, GRACIAS POR SU COMPRA
+</p>
+
+<p *ngIf="showError" class="text-error mt-3">
+    A OCURRIDO ALGO CON SU PAGO!
+</p>
