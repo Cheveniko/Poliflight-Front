@@ -7,19 +7,18 @@ import { AsientosComponent } from './asientos/asientos.component';
 import { PagoComponent } from './pago/pago.component';
 
 const routes: Routes = [
-  {path:'home', component:HomeComponent},
-  {path: 'datos-pasajero/:id', component: FormularioPasajeroComponent},
-  {path: 'vuelos', component: VuelosComponent},
-  {path: 'asientos', component: AsientosComponent},
-  {path: 'pago', component: PagoComponent},
+  { path: 'home', component: HomeComponent },
+  { path: 'datos-pasajero/:id', component: FormularioPasajeroComponent },
+  { path: 'vuelos', component: VuelosComponent },
+  { path: 'asientos', component: AsientosComponent },
+  { path: 'pago', component: PagoComponent },
 
   //{path: '', redirectTo:'home'},
-  {path: '**', redirectTo:'home'}
+  { path: '**', redirectTo: 'home' },
 ];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule],
-
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {}
