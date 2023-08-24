@@ -20,6 +20,8 @@ import { RegistroComponent } from './registro/registro.component';
 import { AsientosComponent } from './asientos/asientos.component';
 import { PagoComponent } from './pago/pago.component';
 import { NgxPayPalModule } from 'ngx-paypal';
+import { FormsModule } from '@angular/forms';
+
 
 @NgModule({
   declarations: [
@@ -30,7 +32,7 @@ import { NgxPayPalModule } from 'ngx-paypal';
     VuelosComponent,
     RegistroComponent,
     AsientosComponent,
-    PagoComponent,
+    PagoComponent
   ],
 
   imports: [
@@ -42,6 +44,7 @@ import { NgxPayPalModule } from 'ngx-paypal';
     HttpClientModule,
     SeatsioAngularModule,
     NgxPayPalModule,
+    FormsModule
   ],
   providers: [VuelosService],
   bootstrap: [AppComponent],
