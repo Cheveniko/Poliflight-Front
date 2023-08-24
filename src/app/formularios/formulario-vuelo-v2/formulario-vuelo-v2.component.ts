@@ -1,8 +1,8 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Aeropuerto } from 'src/app/shared/models/aeropuerto.model';
 import { AeropuertosService } from 'src/app/services/aeropuertos.service';
 import { VuelosService } from 'src/app/services/vuelos.service';
-import { Router, ActivatedRoute } from '@angular/router';
+import { Router, ActivatedRoute, RouterModule } from '@angular/router';
 import { FormBuilder } from '@angular/forms';
 import { NgForm } from '@angular/forms';
 import { NgModel } from '@angular/forms';
@@ -19,12 +19,10 @@ export class FormularioVueloV2Component {
   public destino:string;
   public fecha:string;
   public pasajeros:any;
-  public adultos:number;
-  public niños:number;
-  public infantes:number;
   public max_adultos:number;
   public max_ninos:number;
   public max_infantes:number;
+  public max_adultosM:number;
   vuelos:any[];
   aeropuertos:any;
   lugares:any[];
@@ -34,9 +32,10 @@ export class FormularioVueloV2Component {
   today : any;
   maxDate : any;
   constructor(private fb: FormBuilder,
-    private router: Router,
     private _aeropuertoService: AeropuertosService,
-    private _vueloService: VuelosService
+    private _vueloService: VuelosService,
+    private _router:Router,
+    private _route:ActivatedRoute
 
 //private studentService: StudentService
 ) {
@@ -45,11 +44,12 @@ export class FormularioVueloV2Component {
   this.fecha="";
   this.today = new Date().toISOString().split('T')[0];
   this.maxDate = new Date(new Date().getTime() + 360 * 24 * 60 * 60 * 1012).toISOString().split('T')[0]
-  this.pasajeros={adultos:1, ninos:0, infantes:0};
+  this.pasajeros={adultos_mayores:0, adultos:1, ninos:0, infantes:0};
   this.errorPasajeros=-1;
   this.max_adultos=10;
   this.max_ninos=9;
   this.max_infantes=5;
+  this.max_adultosM=9;
 
 }
 ngOnInit(): void {
@@ -125,7 +125,7 @@ selectDestino(value:any){
   // this.destino="";
 }
 comprobarPasajeros(value:any){
-  if (this.pasajeros.adultos<=0){
+  if (this.pasajeros.adultos<=0 && this.pasajeros.adultos_mayores<=0){
     this.errorPasajeros=1;
   }
   else{
@@ -136,14 +136,15 @@ comprobarPasajeros(value:any){
       this.errorPasajeros=-1;
     }
   }
-  this.max_adultos=10-this.pasajeros.ninos-this.pasajeros.infantes;
-  this.max_ninos=10-this.pasajeros.adultos-this.pasajeros.infantes;
-  if (this.pasajeros.adultos+this.pasajeros.ninos+this.pasajeros.infantes<10){
-    if (10-(this.pasajeros.adultos+this.pasajeros.ninos+this.pasajeros.infantes)>=this.pasajeros.adultos){
+  this.max_adultos=10-this.pasajeros.ninos-this.pasajeros.infantes-this.pasajeros.adultos_mayores;
+  this.max_ninos=10-this.pasajeros.adultos-this.pasajeros.infantes-this.pasajeros.adultos_mayores;
+
+  if (this.pasajeros.adultos+this.pasajeros.ninos+this.pasajeros.infantes+this.pasajeros.adultos_mayores<10){
+    if (10-(this.pasajeros.adultos+this.pasajeros.ninos+this.pasajeros.infantes+this.pasajeros.adultos_mayores)>=this.pasajeros.adultos){
       this.max_infantes=this.pasajeros.adultos;
     }
   }else{
-    this.max_infantes=10 - this.pasajeros.adultos - this.pasajeros.ninos;
+    this.max_infantes=10 - this.pasajeros.adultos - this.pasajeros.ninos - this.pasajeros.adultos_mayores;
   }
   // console.log(this.max_pasajeros);
   // console.log(this.errorPasajeros);
@@ -156,6 +157,7 @@ postBusqueda(form:NgForm){
     fechaVuelo:this.fecha,
     pasajero:this.pasajeros
   }
+  sessionStorage.setItem('adultos_mayores',this.pasajeros.adultos_mayores);
   sessionStorage.setItem('adultos',this.pasajeros.adultos);
   sessionStorage.setItem('ninos',this.pasajeros.ninos);
   sessionStorage.setItem('infantes',this.pasajeros.infantes);

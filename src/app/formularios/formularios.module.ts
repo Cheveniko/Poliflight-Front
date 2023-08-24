@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FormularioPasajeroComponent } from './formulario-pasajero/formulario-pasajero.component';
 import {FormularioVueloComponent } from './formulario-vuelo/formulario-vuelo.component';
 import { FormularioVueloV2Component } from './formulario-vuelo-v2/formulario-vuelo-v2.component';
+import { AppRoutingModule } from '../app-routing.module';
 
 
 //Material UI
