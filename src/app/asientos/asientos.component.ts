@@ -6,31 +6,30 @@ import { VuelosService } from '../services/vuelos.service';
   selector: 'app-asientos',
   templateUrl: './asientos.component.html',
   styleUrls: ['./asientos.component.scss'],
-  providers: [VuelosService]
 })
-export class AsientosComponent implements OnInit{
-  
-  constructor(
-    private _router:Router,
-    private _route:ActivatedRoute,
-    private _vueloService:VuelosService
-  ){}
-
-  ngOnInit(): void {
-    this._route.params.subscribe(params=>{
-      let info = params['info'];
-      // console.log(info);
-      this.obtenerVueloClase(info);
-    });
-  }
-  obtenerVueloClase(info:string){
-    this._vueloService.getVuelo(info).subscribe(
-      response=>{
-        console.log(response);
-      },error=>{
-        console.log(error);
-      }      
-    );
-    
-  }
+export class AsientosComponent {
+  config = {
+    region: 'sa', // e.g. "eu"
+    workspaceKey: '26b63090-3ae6-4517-ac96-f899acb49252',
+    event: 'Poliflight',
+    session: 'continue',
+    language: 'es',
+    categoryFilter: { enabled: true, zoomOnSelect: true },
+    pricing: [
+      {
+        category: 1,
+        ticketTypes: [
+          { ticketType: 'adult', price: 30 },
+          { ticketType: 'child', price: 20 },
+        ],
+      },
+      {
+        category: 2,
+        price: 50,
+      },
+    ],
+    priceFormatter: (price: number) => '$' + price,
+    selectedObjectsInputName: 'selectedSeatsField',
+    holdTokenInputName: '',
+  };
 }
