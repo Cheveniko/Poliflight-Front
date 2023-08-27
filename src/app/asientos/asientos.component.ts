@@ -6,6 +6,7 @@ import { SeatsioClient, Region } from 'seatsio';
 import { NgForm } from '@angular/forms';
 import { NgModel } from '@angular/forms';
 import { CookieService } from 'ngx-cookie-service';
+import { Pasajeroinfo } from '../shared/models/pasajero.model';
 
 @Component({
   selector: 'app-asientos',
@@ -19,6 +20,8 @@ export class AsientosComponent {
   config:any;
   pasajeros:any;
   category:number;
+  informacionPasajeros:any;
+  pasajeross:Pasajeroinfo[]
   constructor(
     private route:ActivatedRoute,
     private router:Router,
@@ -36,6 +39,27 @@ export class AsientosComponent {
       this.cookieService.set('asiento',this.asiento);
     });
       this.pasajeros = JSON.parse(this.cookieService.get('pasajeros')) 
+      this.informacionPasajeros={adultos_mayores:new Array(),adultos:new Array(),ninos:new Array(),infantes:new Array()}
+      let pasajero={
+        nombre: "",
+        apellido: "",
+        nacionalidad: "",
+        pasaporte: "",
+        fechaNacimiento: null
+      };
+      for(let i=0;i<this.pasajeros.adultos_mayores;i++){
+        this.informacionPasajeros.adultos_mayores.push(pasajero);
+      }
+      for(let i=0;i<this.pasajeros.adultos;i++){
+        this.informacionPasajeros.adultos.push(pasajero);
+      }
+      for(let i=0;i<this.pasajeros.ninos;i++){
+        this.informacionPasajeros.ninos.push(pasajero);
+      }
+      for(let i=0;i<this.pasajeros.infantes;i++){
+        this.informacionPasajeros.infantes.push(pasajero);
+      }
+
       let ticketTypesMap = [
         { ticketType:'Adulto Mayor', price: this.asiento*0.5},
         { ticketType:'Adulto', price: this.asiento},
@@ -82,9 +106,13 @@ export class AsientosComponent {
   
   reservarAsientos(form:any){
     console.log(document.getElementsByName('selectedSeatsField')[0].getAttribute('value'));
+    console.log(this.informacionPasajeros);
   }
   parseClases(clase:string){
     if(clase=='vip') return 1;
     else return 2;
+  }
+  imprimirPasajeros(){
+    console.log(this.informacionPasajeros);
   }
 }

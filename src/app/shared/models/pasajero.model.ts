@@ -3,7 +3,6 @@ export interface Pasajeroinfo{
     apellido: string,
     nacionalidad: string,
     pasaporte: string,
-    fechaNacimiento: Date,
-    categoria: string,
+    fechaNacimiento: Date
 }
 
