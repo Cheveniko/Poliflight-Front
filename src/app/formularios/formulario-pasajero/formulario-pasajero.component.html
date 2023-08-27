@@ -1,24 +1,24 @@
 <!-- Crear el HTML para el formulario reactivo con Material -->
+<div class="container-fluid">
+<form [formGroup]="formulario" class="form-container">
 <h2>Datos de adultos</h2>
 <div *ngFor="let adulto of adultosF">
-  <form [formGroup]="formulario" class="form-container">
     <mat-card>
       <mat-card-content>
-        <div class="row">
-          <div class="col-md-6">
+          <div class="col-md-3">
             <mat-form-field class="full-width">
               <input matInput placeholder="Nombre" formControlName="nombre">
               <mat-error *ngIf="formulario.get('nombre')!.invalid">Este campo es obligatorio</mat-error>
             </mat-form-field>
           </div>
-          <div class="col-md-6">
+          <div class="col-md-3">
             <mat-form-field class="full-width">
               <input matInput placeholder="Apellido" formControlName="apellido">
               <mat-error *ngIf="formulario.get('apellido')!.invalid">Este campo es obligatorio</mat-error>
             </mat-form-field>
           </div>
-        </div>
-        <div class="row">
+
+
           <div class="col-md-6">
             <mat-form-field class="full-width" appearance="fill">
               <mat-label>Fecha de nacimiento</mat-label>
@@ -39,25 +39,21 @@
               <mat-error *ngIf="formulario.get('nacionalidad')!.invalid">Este campo es obligatorio</mat-error>
             </mat-form-field>
           </div>
-        </div>
-        <div class="row">
+
+
           <div class="col-md-12">
             <mat-form-field class="full-width">
               <input matInput placeholder="Pasaporte" formControlName="pasaporte">
               <mat-error *ngIf="formulario.get('pasaporte')!.invalid">Este campo es obligatorio</mat-error>
             </mat-form-field>
           </div>
-        </div>
+
       </mat-card-content>
-      <mat-card-actions>
-        <button mat-raised-button color="primary" (click)="enviarFormulario()">Enviar</button>
-      </mat-card-actions>
     </mat-card>
-  </form>
+
 </div>
 <h2>Datos de niños</h2>
 <div *ngFor="let nino of ninosF">
-  <form [formGroup]="formulario" class="form-container">
     <mat-card>
       <mat-card-content>
         <div class="row">
@@ -109,11 +105,9 @@
         <button mat-raised-button color="primary" (click)="enviarFormulario()">Enviar</button>
       </mat-card-actions>
     </mat-card>
-  </form>
 </div>
 <h2>Datos de infantes</h2>
 <div *ngFor="let infante of infantesF">
-  <form [formGroup]="formulario" class="form-container">
     <mat-card>
       <mat-card-content>
         <div class="row">
@@ -161,9 +155,11 @@
           </div>
         </div>
       </mat-card-content>
-      <mat-card-actions>
-        <button mat-raised-button color="primary" (click)="enviarFormulario()">Enviar</button>
-      </mat-card-actions>
+
     </mat-card>
-  </form>
+</div>
+</form>
+<mat-card-actions>
+  <button mat-raised-button color="primary" (click)="enviarFormulario()">Enviar Datos</button>
+</mat-card-actions>
 </div>

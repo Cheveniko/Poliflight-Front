@@ -1,0 +1,159 @@
+<div class="container">
+  <h1>Itinerario de viaje</h1>
+  <div class="row">
+    <div class="col-md-8">
+      <div class="card">
+        <div class="card-header">
+          <h3>Resumen del viaje</h3>
+        </div>
+        <div class="card-body">
+          <p><strong>Origen:</strong>{{ vuelo.lugar_origen_id.Ciudad  }}</p>
+          <p><strong>Destino:</strong> {{ vuelo.lugar_destino_id.Ciudad  }}</p>
+          <p><strong>Fecha de salida:</strong> {{ vuelo.fecha }}</p>
+          <p><strong>Distancia: </strong> {{ vuelo.distancia_KM }}</p>
+          <p><strong>Avion: </strong> {{ vuelo.id_Avion.modelo }}</p>
+        </div>
+      </div>
+      <div class="card mt-3">
+        <div class="card-header">
+          <h3>Datos de los pasajeros</h3>
+        </div>
+        <div class="card-body">
+          <form>
+            <div class="form-group">
+              <label for="nombre">Nombre</label>
+              <input type="text" class="form-control" id="nombre" placeholder="Ingrese su nombre" required>
+            </div>
+            <div class="form-group">
+              <label for="apellido">Apellido</label>
+              <input type="text" class="form-control" id="apellido" placeholder="Ingrese su apellido" required>
+            </div>
+            <div class="form-group">
+              <label for="email">Email</label>
+              <input type="email" class="form-control" id="email" placeholder="Ingrese su email" required>
+            </div>
+            <div class="form-group">
+              <label for="telefono">Teléfono</label>
+              <input type="tel" class="form-control" id="telefono" placeholder="Ingrese su teléfono" required>
+            </div>
+            <button type="submit" class="btn btn-primary">Guardar datos</button>
+          </form>
+        </div>
+      </div>
+      <div class="card mt-3">
+        <div class="card-header">
+          <h3>Asientos seleccionados</h3>
+        </div>
+        <div class="card-body">
+          <!-- Aquí se puede usar un componente de angular para mostrar los asientos disponibles y seleccionados -->
+          <!-- Por ejemplo: https://www.npmjs.com/package/ng-seatmap -->
+          <!-- Se asume que el usuario ya ha seleccionado los asientos y se muestran en una tabla -->
+          <table class="table table-bordered">
+            <thead>
+              <tr>
+                <th>Vuelo</th>
+                <th>Asiento</th>
+                <th>Precio</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>EC-123</td>
+                <td>A1</td>
+                <td>$500</td>
+              </tr>
+              <tr>
+                <td>EC-456</td>
+                <td>B2</td>
+                <td>$500</td>
+              </tr>
+            </tbody>
+          </table>
+
+        </div>
+
+      </div>
+
+      <!-- Se usa un componente de bootstrap para crear un acordeón con las condiciones de compra y las reglas y reembolsos -->
+      <!-- https://getbootstrap.com/docs/5.0/components/accordion/ -->
+      <!-- Se asume que el contenido de cada sección es estático y se puede modificar según la aerolínea -->
+      <!-- Se puede usar un servicio de angular para obtener el contenido dinámicamente desde una API o una base de datos -->
+      <!-- Por ejemplo: https://angular.io/tutorial/toh-pt4 -->
+
+      <div class="accordion mt-3" id="accordionExample">
+        <!-- Sección de condiciones de compra -->
+        <div class="accordion-item">
+          <!-- Botón para desplegar o contraer la sección -->
+          <!-- Se usa el atributo data-bs-target para indicar el id del elemento que se va a desplegar o contraer -->
+          <!-- Se usa el atributo aria-controls para indicar el id del elemento que se va a controlar -->
+          <!-- Se usa el atributo aria-expanded para indicar si el elemento está desplegado o no -->
+          <!-- Se usa la clase collapsed para indicar que el elemento está contraído por defecto -->
+          <h2 class="accordion-header" id="headingOne">
+            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
+              Condiciones de compra
+            </button>
+          </h2>
+          <!-- Elemento que se va a desplegar o contraer -->
+          <!-- Se usa el atributo aria-labelledby para indicar el id del elemento que lo controla -->
+          <!-- Se usa la clase collapse para indicar que el elemento es colapsable -->
+          <!-- Se usa la clase show para indicar que el elemento está desplegado por defecto -->
+          <div id="collapseOne" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
+            <!-- Contenido de la sección -->
+            <div class="accordion-body">
+              <p>Estas son las condiciones de compra de la aerolínea:</p>
+              <ul>
+                <li>El pago se puede realizar con tarjeta de crédito o débito, PayPal o transferencia bancaria.</li>
+                <li>El precio incluye los impuestos, tasas y cargos aplicables.</li>
+                <li>El precio no incluye el equipaje facturado, el seguro de viaje ni los servicios adicionales.</li>
+                <li>El precio está sujeto a cambios según la disponibilidad y la demanda.</li>
+                <li>La reserva se confirma una vez que se recibe el pago completo.</li>
+                <li>Se debe presentar el documento de identidad o pasaporte válido para el embarque.</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <!-- Sección de reglas y reembolsos -->
+        <div class="accordion-item">
+          <!-- Botón para desplegar o contraer la sección -->
+          <!-- Se usa el atributo data-bs-target para indicar el id del elemento que se va a desplegar o contraer -->
+          <!-- Se usa el atributo aria-controls para indicar el id del elemento que se va a controlar -->
+          <!-- Se usa el atributo aria-expanded para indicar si el elemento está desplegado o no -->
+          <!-- Se usa la clase collapsed para indicar que el elemento está contraído por defecto -->
+          <h2 class="accordion-header" id="headingTwo">
+            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+              Reglas y reembolsos
+            </button>
+          </h2>
+          <!-- Elemento que se va a desplegar o contraer -->
+          <!-- Se usa el atributo aria-labelledby para indicar el id del elemento que lo controla -->
+          <!-- Se usa la clase collapse para indicar que el elemento es colapsable -->
+          <!-- Se usa la clase show para indicar que el elemento está desplegado por defecto -->
+          <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#accordionExample">
+            <!-- Contenido de la sección -->
+            <div class="accordion-body">
+              <p>Estas son las reglas y reembolsos de la aerolínea:</p>
+              <ul>
+                <li>Se puede cambiar la fecha o el destino del vuelo hasta 24 horas antes de la salida, pagando una penalidad y la diferencia de tarifa si la hubiera.</li>
+                <li>Se puede cancelar la reserva hasta 48 horas antes de la salida, pagando una penalidad y recibiendo un crédito para futuros vuelos.</li>
+                <li>No se permite el cambio ni la cancelación dentro de las 24 horas previas a la salida.</li>
+                <li>No se permite el reembolso en efectivo ni en el método de pago original.</li>
+                <li>En caso de cancelación o retraso del vuelo por parte de la aerolínea, se ofrecerá una alternativa o un reembolso completo según las normas vigentes.</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+
+    <!-- Se usa una columna diferente para mostrar el carrito con los precios y detalles de compra -->
+    <div class="col-md-4">
+      <div class="card">
+        <div class="card-header">
+          <h3>Carrito</h3>
+        </div>
+        <div class="card-body">
+          <!-- Se muestra un resumen del carrito con los precios y detalles de compra -->
+

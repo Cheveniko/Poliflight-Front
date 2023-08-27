@@ -6,6 +6,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { FormBuilder } from '@angular/forms';
 import { NgForm } from '@angular/forms';
 import { NgModel } from '@angular/forms';
+import { BusquedaVuelo } from 'src/app/shared/models/vuelo.model';
 
 @Component({
   selector: 'app-formulario-vuelo-v2',
@@ -98,8 +99,6 @@ selectOrigen(value:any){
       indexD=i;
     }
   }
-  console.log(indexO);
-  console.log(indexD);
   if (indexO!=-1){
     this.destinos.splice(indexO,1);
   }
@@ -156,9 +155,10 @@ postBusqueda(form:NgForm){
     fechaVuelo:this.fecha,
     pasajero:this.pasajeros
   }
-  sessionStorage.setItem('adultos',this.pasajeros.adultos);
-  sessionStorage.setItem('ninos',this.pasajeros.ninos);
-  sessionStorage.setItem('infantes',this.pasajeros.infantes);
+  sessionStorage.setItem('adultos', this.pasajeros.adultos);
+  sessionStorage.setItem('ninos', this.pasajeros.ninos);
+  sessionStorage.setItem('infantes', this.pasajeros.infantes);
+
   this._vueloService.buscarVuelos(formEnvio).subscribe(
     response=>{
         console.log(response.result);
@@ -166,11 +166,11 @@ postBusqueda(form:NgForm){
       },error=>{
       console.log(<any>error);
       });
-}
-cambiarFecha(value:any){
-  this.fecha='algo';
+      console.log(this.vuelos)
 }
 
+saveDataObject(vuelo:any) {
+ sessionStorage.setItem('selectedObjVuelo', JSON.stringify(vuelo));
 
-
+}
 }

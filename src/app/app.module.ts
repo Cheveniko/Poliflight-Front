@@ -18,6 +18,7 @@ import { VuelosComponent } from './vuelos/vuelos.component';
 import { VuelosService } from './services/vuelos.service';
 import { RegistroComponent } from './registro/registro.component';
 import { AsientosComponent } from './asientos/asientos.component';
+import { ItinerarioComponent } from './itinerario/itinerario.component';
 
 @NgModule({
   declarations: [
@@ -28,6 +29,7 @@ import { AsientosComponent } from './asientos/asientos.component';
     VuelosComponent,
     RegistroComponent,
     AsientosComponent,
+    ItinerarioComponent,
   ],
 
   imports: [
