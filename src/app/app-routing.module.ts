@@ -10,7 +10,7 @@ const routes: Routes = [
   { path: 'home', component: HomeComponent },
   { path: 'datos-pasajero/:id', component: FormularioPasajeroComponent },
   { path: 'vuelos', component: VuelosComponent },
-  { path: 'asientos', component: AsientosComponent },
+  { path: 'asientos/:info', component: AsientosComponent },
   { path: 'pago', component: PagoComponent },
 
   //{path: '', redirectTo:'home'},

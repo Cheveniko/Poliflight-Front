@@ -7,6 +7,7 @@ import { FormBuilder } from '@angular/forms';
 import { NgForm } from '@angular/forms';
 import { NgModel } from '@angular/forms';
 import { faPlane } from '@fortawesome/free-solid-svg-icons';
+import { CookieService } from 'ngx-cookie-service';
 
 @Component({
   selector: 'app-formulario-vuelo-v2',
@@ -23,7 +24,7 @@ export class FormularioVueloV2Component {
   public max_adultos:number;
   public max_ninos:number;
   public max_infantes:number;
-  public max_adultosM:number;
+  public max_adultos_mayores:number;
   vuelos:any[];
   aeropuertos:any;
   lugares:any[];
@@ -33,6 +34,7 @@ export class FormularioVueloV2Component {
   today : any;
   maxDate : any;
   constructor(private fb: FormBuilder,
+    private cookieService: CookieService,
     private _aeropuertoService: AeropuertosService,
     private _vueloService: VuelosService,
     private _router:Router,
@@ -48,7 +50,7 @@ export class FormularioVueloV2Component {
       this.max_adultos=10;
       this.max_ninos=9;
       this.max_infantes=5;
-      this.max_adultosM=9;
+      this.max_adultos_mayores=9;
 }
 ngOnInit(): void {
 // Inicializar el FormGroup con los controles y validadores correspondientes
@@ -96,8 +98,8 @@ selectOrigen(value:any){
       indexD=i;
     }
   }
-  console.log(indexO);
-  console.log(indexD);
+  // console.log(indexO);
+  // console.log(indexD);
   if (indexO!=-1){
     this.destinos.splice(indexO,1);
   }
@@ -123,7 +125,7 @@ selectDestino(value:any){
   // this.destino="";
 }
 comprobarPasajeros(value: any) {
-  if (this.pasajeros.adultos <= 0) {
+  if (this.pasajeros.adultos <= 0 && this.pasajeros.adultos_mayores <=0) {
       this.errorPasajeros = 1;
   } else {
       if (this.pasajeros.infantes > this.pasajeros.adultos) {
@@ -133,6 +135,7 @@ comprobarPasajeros(value: any) {
       }
     }
 
+  this.max_adultos_mayores=10-this.pasajeros.ninos-this.pasajeros.infantes-this.pasajeros.adultos;
   this.max_adultos=10-this.pasajeros.ninos-this.pasajeros.infantes-this.pasajeros.adultos_mayores;
   this.max_ninos=10-this.pasajeros.adultos-this.pasajeros.infantes-this.pasajeros.adultos_mayores;
 
@@ -156,10 +159,11 @@ postBusqueda(form:NgForm){
     fechaVuelo:this.fecha,
     pasajero:this.pasajeros
   }
-  sessionStorage.setItem('adultos_mayores',this.pasajeros.adultos_mayores);
-  sessionStorage.setItem('adultos',this.pasajeros.adultos);
-  sessionStorage.setItem('ninos',this.pasajeros.ninos);
-  sessionStorage.setItem('infantes',this.pasajeros.infantes);
+  // sessionStorage.setItem('adultos_mayores',this.pasajeros.adultos_mayores);
+  // sessionStorage.setItem('adultos',this.pasajeros.adultos);
+  // sessionStorage.setItem('ninos',this.pasajeros.ninos);
+  // sessionStorage.setItem('infantes',this.pasajeros.infantes);
+  this.cookieService.set('pasajeros',JSON.stringify(this.pasajeros));
   this._vueloService.buscarVuelos(formEnvio).subscribe(
     response=>{
         console.log(response.result);

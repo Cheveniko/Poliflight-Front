@@ -1,6 +1,35 @@
-<p class="display-5">Escoge tus asientos</p>
-<form id="seatChartForm">
-  <div style="height: 1000px">
-    <si-seatsio-seating-chart [config]="config"></si-seatsio-seating-chart>
+<!-- <p class="display-5">Escoge tus asientos</p> -->
+<form #ventaForm="ngForm" (ngSubmit)="reservarAsientos(ventaForm)">
+  <div class="row">
+    <div class="col-md-6">
+      <h2>Escoge tus asientos</h2>
+      <div style="height: 1000px">
+        <si-seatsio-seating-chart [config]="config"></si-seatsio-seating-chart>
+      </div>
+    </div>
+    <div class="col-md-6">
+      <h2>Información de los pasajeros</h2>
+      <div *ngIf="pasajeros.adultos_mayores > 0" class="card">
+        <h2>adultos mayores</h2>
+      </div>
+      <div *ngIf="pasajeros.adultos > 0" class="card">
+        <h2>adultos</h2>
+      </div>
+      <div *ngIf="pasajeros.ninos > 0" class="card">
+        <h2>niños</h2>
+      </div>
+      <div *ngIf="pasajeros.infantes > 0" class="card">
+        <h2>infantes</h2>
+      </div>
+    </div>
+  </div>
+  
+  <div class="text-center">
+    <input
+      type="submit"
+      [disabled]="!ventaForm.form.valid"
+      value="BUSCAR VUELO"
+      class="form-button fs-5 rounded"
+    />
   </div>
 </form>

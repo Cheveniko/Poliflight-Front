@@ -26,7 +26,7 @@ export class VuelosService {
   }
   buscarVuelos(form:any): Observable<any> {
     let headers=new HttpHeaders().set('Content-Type','application/json');
-    console.log(form);
+    // console.log(form);
     return this.http.post(API_URL+'/consulta-vuelo',form, {headers:headers, withCredentials:true});
   }
   getVuelo(info:string): Observable<any>{
