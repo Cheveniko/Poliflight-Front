@@ -3,7 +3,7 @@ import { HttpClient, HttpErrorResponse , HttpHeaders} from '@angular/common/http
 import { Injectable } from '@angular/core';
 import { throwError, Observable} from 'rxjs';
 import {catchError} from 'rxjs/operators';
-import { Vuelo } from '../shared/models/vuelo.model';
+import { BusquedaVuelo } from '../shared/models/vuelo.model';
 
 @Injectable({
   providedIn: 'root'
@@ -17,13 +17,6 @@ export class VuelosService {
 
   }
 
-  getVuelos(): Observable<Vuelo[]> {
-
-    return this.http
-      .get<Vuelo[]>(API_URL+'/vuelo')
-      .pipe(catchError(VuelosService._handleError))
-
-  }
   buscarVuelos(form:any): Observable<any> {
     let headers=new HttpHeaders().set('Content-Type','application/json');
     // console.log(form);

@@ -5,6 +5,7 @@ import { FormularioPasajeroComponent } from './formularios/formulario-pasajero/f
 import { VuelosComponent } from './vuelos/vuelos.component';
 import { AsientosComponent } from './asientos/asientos.component';
 import { PagoComponent } from './pago/pago.component';
+import { ItinerarioComponent } from './itinerario/itinerario.component';
 
 const routes: Routes = [
   { path: 'home', component: HomeComponent },
@@ -12,6 +13,10 @@ const routes: Routes = [
   { path: 'vuelos', component: VuelosComponent },
   { path: 'asientos/:info', component: AsientosComponent },
   { path: 'pago', component: PagoComponent },
+  {path: 'itinerario', component: ItinerarioComponent},
+
+
+
 
   //{path: '', redirectTo:'home'},
   { path: '**', redirectTo: 'home' },

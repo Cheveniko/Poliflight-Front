@@ -8,6 +8,7 @@ import { NgForm } from '@angular/forms';
 import { NgModel } from '@angular/forms';
 import { faPlane } from '@fortawesome/free-solid-svg-icons';
 import { CookieService } from 'ngx-cookie-service';
+import { BusquedaVuelo } from 'src/app/shared/models/vuelo.model';
 
 @Component({
   selector: 'app-formulario-vuelo-v2',
@@ -98,8 +99,6 @@ selectOrigen(value:any){
       indexD=i;
     }
   }
-  // console.log(indexO);
-  // console.log(indexD);
   if (indexO!=-1){
     this.destinos.splice(indexO,1);
   }
