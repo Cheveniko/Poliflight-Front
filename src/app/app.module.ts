@@ -3,6 +3,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { AppComponent } from './app.component';
+import { ReactiveFormsModule } from '@angular/forms';
 
 //Librerias
 import { SeatsioAngularModule } from '@seatsio/seatsio-angular';
@@ -33,7 +34,7 @@ import { ItinerarioComponent } from './itinerario/itinerario.component';
     RegistroComponent,
     AsientosComponent,
     PagoComponent,
-    ItinerarioComponent,
+    ItinerarioComponent
   ],
 
   imports: [
@@ -46,6 +47,7 @@ import { ItinerarioComponent } from './itinerario/itinerario.component';
     SeatsioAngularModule,
     NgxPayPalModule,
     FormsModule,
+    ReactiveFormsModule
   ],
   providers: [VuelosService],
   bootstrap: [AppComponent],
