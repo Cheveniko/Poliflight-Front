@@ -8,7 +8,7 @@ import { BusquedaVuelo } from '../shared/models/vuelo.model';
 })
 export class ItinerarioComponent {
 
-  vuelo:any = JSON.parse(sessionStorage.getItem('selectedObjVuelo') || '{}');
+  // vuelo:any = JSON.parse(sessionStorage.getItem('selectedObjVuelo') || '{}');
 
 
 }

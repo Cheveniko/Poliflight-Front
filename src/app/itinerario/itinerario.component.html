@@ -7,11 +7,11 @@
           <h3>Resumen del viaje</h3>
         </div>
         <div class="card-body">
-          <p><strong>Origen:</strong>{{ vuelo.lugar_origen_id.Ciudad  }}</p>
-          <p><strong>Destino:</strong> {{ vuelo.lugar_destino_id.Ciudad  }}</p>
+          <!-- <p><strong>Origen:</strong>##</p>
+          <p><strong>Destino:</strong> {{ vuelo.lugar_destino_id.Ciudad }}</p>
           <p><strong>Fecha de salida:</strong> {{ vuelo.fecha }}</p>
-          <p><strong>Distancia: </strong> {{ vuelo.distancia_KM }}</p>
-          <p><strong>Avion: </strong> {{ vuelo.id_Avion.modelo }}</p>
+          <p><strong>Distancia:</strong> {{ vuelo.distancia_KM }}</p>
+          <p><strong>Avion:</strong> {{ vuelo.id_Avion.modelo }}</p> -->
         </div>
       </div>
       <div class="card mt-3">
@@ -69,9 +69,7 @@
               </tr>
             </tbody>
           </table>
-
         </div>
-
       </div>
 
       <!-- Se usa un componente de bootstrap para crear un acordeón con las condiciones de compra y las reglas y reembolsos -->
@@ -143,9 +141,7 @@
             </div>
           </div>
         </div>
-
       </div>
-
     </div>
 
     <!-- Se usa una columna diferente para mostrar el carrito con los precios y detalles de compra -->
@@ -156,4 +152,11 @@
         </div>
         <div class="card-body">
           <!-- Se muestra un resumen del carrito con los precios y detalles de compra -->
-
+        </div>
+        <div>
+          <app-pago></app-pago>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
