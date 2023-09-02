@@ -186,27 +186,25 @@ export class AsientosComponent {
         infantes:this.informacionPasajeros.infantes.value
       }
     }
-    console.log(this.seleccion.adultos_mayores.length)
+    // console.log(this.seleccion.adultos_mayores.length)
+    // console.log(this.seleccion.adultos.length)
+    // console.log(this.seleccion.ninos.length)
+    // console.log(this.seleccion.infantes.length)
     for(let i=0;i<this.seleccion.adultos_mayores.length;i++){
-      informacion.pasajeros.adultos_mayores[i].asiento=this.asientos.adultos_mayores[i];
+      informacion.pasajeros.adultos_mayores[i].asiento=this.seleccion.adultos_mayores[i];
     }
     for(let i=0;i<this.seleccion.adultos.length;i++){
-      informacion.pasajeros.adultos[i].asiento=this.asientos.adultos[i];
+      informacion.pasajeros.adultos[i].asiento=this.seleccion.adultos[i];
     }
     for(let i=0;i<this.seleccion.ninos.length;i++){
-      informacion.pasajeros.ninos[i].asiento=this.asientos.ninos[i];
+      informacion.pasajeros.ninos[i].asiento=this.seleccion.ninos[i];
     }
     for(let i=0;i<this.seleccion.infantes.length;i++){
-      informacion.pasajeros.infantes[i].asiento=this.asientos.infantes[i];
+      informacion.pasajeros.infantes[i].asiento=this.seleccion.infantes[i];
     }
-    // console.log(this.asiento);
-    // console.log(this.seleccion);
-    // console.log(this.asientos);
-    // console.log(this.informacionPasajeros);
-    // console.log(this.informacionPasajeros.adultos_mayores.value);
-    // console.log(this.informacionPasajeros.adultos.value);
-    // console.log(this.informacionPasajeros.ninos.value);
-    // console.log(this.informacionPasajeros.infantes.value);
     console.log(informacion);
+    this.cookieService.set('informacion',JSON.stringify(informacion));
+    this.router.navigate(["/itinerario"]);
   }
+
 }
