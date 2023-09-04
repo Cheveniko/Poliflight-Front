@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, HostListener} from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { VuelosService } from '../services/vuelos.service';
 import {SeatsioAngularModule} from '@seatsio/seatsio-angular'
@@ -27,6 +27,9 @@ export class AsientosComponent {
   form:FormGroup;
   asientos:any;
   seleccion:any;
+  veinteMinutosEnMilisegundos = 20 * 60 * 1000;
+  fechaExpiracion = new Date(Date.now() + this.veinteMinutosEnMilisegundos);
+
   constructor(
     private route:ActivatedRoute,
     private router:Router,
@@ -44,9 +47,9 @@ export class AsientosComponent {
       this.vuelo_id=info.split('-')[0];
       this.clase=info.split('-')[1];
       this.asiento=info.split('-')[2];
-      this.cookieService.set('vuelo_id',this.vuelo_id)
-      this.cookieService.set('clase',this.clase);
-      this.cookieService.set('asiento',this.asiento);
+      this.cookieService.set('vuelo_id',this.vuelo_id, this.fechaExpiracion);
+      this.cookieService.set('clase',this.clase, this.fechaExpiracion);
+      this.cookieService.set('asiento',this.asiento, this.fechaExpiracion);
     });
       this.seleccion = {adultos_mayores:[],adultos:[],ninos:[],infantes:[]};
       this.pasajeros = JSON.parse(this.cookieService.get('pasajeros')) 
@@ -203,8 +206,14 @@ export class AsientosComponent {
       informacion.pasajeros.infantes[i].asiento=this.seleccion.infantes[i];
     }
     console.log(informacion);
-    this.cookieService.set('informacion',JSON.stringify(informacion));
+    this.cookieService.set('informacion',JSON.stringify(informacion), this.fechaExpiracion);
     this.router.navigate(["/itinerario"]);
+  }
+
+  @HostListener('window:beforeunload', ['$event'])
+  unloadNotification($event: any): void {
+    
+    $event.returnValue = 'Se perderán los datos del formulario. ¿Estás seguro de que deseas salir?';
   }
 
 }

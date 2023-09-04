@@ -34,7 +34,7 @@ import { ItinerarioComponent } from './itinerario/itinerario.component';
     RegistroComponent,
     AsientosComponent,
     PagoComponent,
-    ItinerarioComponent
+    ItinerarioComponent,
   ],
 
   imports: [
@@ -47,7 +47,7 @@ import { ItinerarioComponent } from './itinerario/itinerario.component';
     SeatsioAngularModule,
     NgxPayPalModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
   ],
   providers: [VuelosService],
   bootstrap: [AppComponent],

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { IPayPalConfig, ICreateOrderRequest } from 'ngx-paypal';
 import { HttpClient } from '@angular/common/http';
+import { CookieService } from 'ngx-cookie-service';
 
 @Component({
   selector: 'app-pago',
@@ -12,16 +13,18 @@ export class PagoComponent implements OnInit {
   showSuccess: boolean;
   showError: boolean;
   public showPaypalButtons: boolean;
+  public info: any;
+  correo: any;
+  persona: any;
 
-  public subscriptionPrice: string = '9.99'; // Cambia el precio aquí
+
+  public subscriptionPrice: any; // Cambia el precio aquí
 
 
-  dataToSend = {
-    correo: 'davpasquel@gmail.com',
-    nombre: 'David Mena',
-  };
-
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient,
+    private cookieService: CookieService) {
+      
+    }
 
   pay() {
     this.showPaypalButtons = true;
@@ -33,11 +36,32 @@ export class PagoComponent implements OnInit {
 
   ngOnInit(): void {
     this.initConfig();
+    const cookieKeys = Object.keys(this.cookieService.getAll());
+    cookieKeys.forEach((key: string) => {
+       const cookieValue = this.cookieService.get(key);
+       console.log(`Cookie: ${key}, Valor: ${cookieValue}`);
+    });
+    this.info = JSON.parse(this.cookieService.get('informacion'));
+    this.subscriptionPrice = (this.info.precio_total.toFixed(2) * 0.12) + this.info.precio_total;
+    console.log(this.subscriptionPrice)
     
   }
 
   finalizar(){
-    this.http.post('http://localhost:5000/send_email', this.dataToSend)
+
+    let savedData = this.cookieService.get('userData');
+    let parsedData = JSON.parse(savedData);
+    this.persona = parsedData.nombre;
+    this.correo = parsedData.email;
+    let dataToSend = {
+      correo: this.correo,
+      nombre: this.persona,
+      infor: this.info
+    };
+    console.log("Inof anla dsfj l")
+    console.log(dataToSend);
+    
+    this.http.post('http://localhost:5000/send_email', dataToSend)
       .subscribe(response => {
         console.log('Respuesta del servidor:', response);
       });

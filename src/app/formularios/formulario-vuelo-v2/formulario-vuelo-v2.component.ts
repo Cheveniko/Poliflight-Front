@@ -162,17 +162,20 @@ postBusqueda(form:NgForm){
   // sessionStorage.setItem('adultos',this.pasajeros.adultos);
   // sessionStorage.setItem('ninos',this.pasajeros.ninos);
   // sessionStorage.setItem('infantes',this.pasajeros.infantes);
-  this.cookieService.set('pasajeros',JSON.stringify(this.pasajeros));
+  const veinteMinutosEnMilisegundos = 30 * 60 * 1000;  // 30 minutos para durar la cookie
+  const fechaExpiracion = new Date(Date.now() + veinteMinutosEnMilisegundos);
+
+  this.cookieService.set('pasajeros',JSON.stringify(this.pasajeros), fechaExpiracion);
   this._vueloService.buscarVuelos(formEnvio).subscribe(
     response=>{
-        console.log(response.result);
-        this.vuelos = response.result;
-      },
-      (error) => {
-        console.log(<any>error);
-      }
-    );
-  }
+      console.log(response.result);
+      this.vuelos = response.result;
+    },
+    (error) => {
+      console.log(<any>error);
+    }
+  );
+}
   cambiarFecha(value: any) {
     this.fecha = 'algo';
   }
