@@ -6,12 +6,13 @@ import { VuelosComponent } from './vuelos/vuelos.component';
 import { AsientosComponent } from './asientos/asientos.component';
 import { PagoComponent } from './pago/pago.component';
 import { ItinerarioComponent } from './itinerario/itinerario.component';
+import { SeleccionVueloComponent } from './seleccion-vuelo/seleccion-vuelo.component';
 
 const routes: Routes = [
   { path: 'home', component: HomeComponent },
   { path: 'datos-pasajero/:id', component: FormularioPasajeroComponent },
-  { path: 'vuelos', component: VuelosComponent },
-  { path: 'asientos/:info', component: AsientosComponent },
+  { path: 'asientos/:tipo', component: AsientosComponent },
+  { path: 'vuelos/:tipo', component: SeleccionVueloComponent },
   { path: 'pago', component: PagoComponent },
   {path: 'itinerario', component: ItinerarioComponent},
 

@@ -23,6 +23,8 @@ import { PagoComponent } from './pago/pago.component';
 import { NgxPayPalModule } from 'ngx-paypal';
 import { FormsModule } from '@angular/forms';
 import { ItinerarioComponent } from './itinerario/itinerario.component';
+import { FormularioVueloV2Component } from './formulario-vuelo-v2/formulario-vuelo-v2.component';
+import { SeleccionVueloComponent } from './seleccion-vuelo/seleccion-vuelo.component';
 
 @NgModule({
   declarations: [
@@ -34,7 +36,10 @@ import { ItinerarioComponent } from './itinerario/itinerario.component';
     RegistroComponent,
     AsientosComponent,
     PagoComponent,
-    ItinerarioComponent
+    ItinerarioComponent,
+    FormularioVueloV2Component,
+    SeleccionVueloComponent
+
   ],
 
   imports: [

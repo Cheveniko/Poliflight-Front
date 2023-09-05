@@ -27,29 +27,23 @@ export class AsientosComponent {
   form:FormGroup;
   asientos:any;
   seleccion:any;
+  title:string;
+  tipo:string;
   constructor(
     private route:ActivatedRoute,
     private router:Router,
     private cookieService:CookieService,
     private fb:FormBuilder
   ){
-    // console.log("hey");
-    // this.reservarAsientos();
-    // this.form=this.fb.group({
-      
-    // });
-
+    console.log(this.cookieService.getAll());
     this.route.params.subscribe(params=>{
-      let info=params['info'];
-      this.vuelo_id=info.split('-')[0];
-      this.clase=info.split('-')[1];
-      this.asiento=info.split('-')[2];
-      this.cookieService.set('vuelo_id',this.vuelo_id)
-      this.cookieService.set('clase',this.clase);
-      this.cookieService.set('asiento',this.asiento);
+      this.tipo=params['tipo'];
+      this.getData(this.tipo);
+      
     });
       this.seleccion = {adultos_mayores:[],adultos:[],ninos:[],infantes:[]};
       this.pasajeros = JSON.parse(this.cookieService.get('pasajeros')) 
+      console.log(JSON.parse(this.cookieService.get('pasajeros')) )
       this.informacionPasajeros = {adultos_mayores:this.fb.array([]), adultos:this.fb.array([]), ninos:this.fb.array([]), infantes:this.fb.array([])}
       for(let i=0;i<this.pasajeros.adultos_mayores;i++){
         this.informacionPasajeros.adultos_mayores.push(this.fb.group({
@@ -186,10 +180,6 @@ export class AsientosComponent {
         infantes:this.informacionPasajeros.infantes.value
       }
     }
-    // console.log(this.seleccion.adultos_mayores.length)
-    // console.log(this.seleccion.adultos.length)
-    // console.log(this.seleccion.ninos.length)
-    // console.log(this.seleccion.infantes.length)
     for(let i=0;i<this.seleccion.adultos_mayores.length;i++){
       informacion.pasajeros.adultos_mayores[i].asiento=this.seleccion.adultos_mayores[i];
     }
@@ -204,7 +194,40 @@ export class AsientosComponent {
     }
     console.log(informacion);
     this.cookieService.set('informacion',JSON.stringify(informacion));
-    this.router.navigate(["/itinerario"]);
+    let informacionPasajeros:any[];
+    informacionPasajeros=[];
+    if(this.cookieService.check('informacionPasajeros')){
+      informacionPasajeros=JSON.parse(this.cookieService.get('informacionPasajeros'));
+    }
+    if(this.tipo=='ida'){
+      informacionPasajeros[0]=informacion;
+      this.cookieService.set('informacionPasajeros',JSON.stringify(informacionPasajeros))
+      this.router.navigate(["/vuelos/","vuelta"]);
+    }
+    if(this.tipo=='vuelta'){
+      informacionPasajeros[1]=informacion;
+      this.cookieService.set('informacionPasajeros',JSON.stringify(informacionPasajeros))
+      this.router.navigate(["/itinerario/"]);
+    }
+    
+  }
+  getData(tipo:string){
+    let informacion:any[];
+    informacion=[]
+    if(tipo=='ida'){
+      this.title = "SELECCIONE LOS ASIENTOS PARA SU VUELO DE IDA";
+      informacion=JSON.parse(this.cookieService.get('informacionPasajeros'));
+      this.vuelo_id=informacion[0].vuelo_id;
+      this.clase=informacion[0].clase;
+      this.asiento=informacion[0].precio;
+    }
+    if(tipo=='vuelta'){
+      this.title="SELECCIONES LOS ASIENTOS PARA SU VUELO DE VUELTA";
+      informacion=JSON.parse(this.cookieService.get('informacionPasajeros'));
+      this.vuelo_id=informacion[1].vuelo_id;
+      this.clase=informacion[1].clase;
+      this.asiento=informacion[1].precio;
+    }
   }
 
 }

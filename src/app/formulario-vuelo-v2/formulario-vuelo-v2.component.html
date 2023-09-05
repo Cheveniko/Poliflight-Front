@@ -1,6 +1,14 @@
 <div class="card form-card p-4 my-4">
   <form #ventaForm="ngForm" (ngSubmit)="postBusqueda(ventaForm)">
     <div class="row">
+      <div class="col-md-2">
+          <label><input type="radio" name="optionF" value="1" [(ngModel)]="options">Ida</label>
+      </div>
+      <div class="col-md-2">
+          <label><input type="radio" name="optionF" value="2" [(ngModel)]="options">Ida y vuelta</label>
+      </div>
+    </div>
+    <div class="row">
       <div class="col-md-8 p-auto">
         <div class="row mt-3">
           <div class="col-md-4">
@@ -43,13 +51,25 @@
           </div>
           <div class="col-md-4">
             <div>
-              <label for="fechaF">Fecha: </label>
+              <label for="fechaF">Fecha Ida: </label>
               <input
                 class="form-control"
                 type="date"
                 name="fechaF"
                 #fechaF="ngModel"
-                [(ngModel)]="fecha"
+                [(ngModel)]="fechaIda"
+                min="{{ today }}"
+                max="{{ maxDate }}"
+              />
+            </div>
+            <div *ngIf="options==2">
+              <label for="fechaF">Fecha Vuelta: </label>
+              <input
+                class="form-control"
+                type="date"
+                name="fechaF"
+                #fechaF="ngModel"
+                [(ngModel)]="fechaVuelta"
                 min="{{ today }}"
                 max="{{ maxDate }}"
               />
@@ -127,6 +147,7 @@
             (change)="comprobarPasajeros($event)"
             max="{{ max_infantes }}"
           />
+          <small>Los niños menos a 2 años de edad no pagan ningun cargo por el boleto</small>
         </div>
         <div *ngIf="errorPasajeros == 2">
           <label for="fechaF">Infantes: </label>
@@ -158,14 +179,12 @@
   <br />
   <br />
   <div class="container" style="--bs-bg-opacity: 0.5; min-width: 75%">
-
-    <div
+    <div *ngIf="vuelos_ida">
+      <div><h1 class="text-center">SELECCIONE SU VUELO DE IDA</h1></div>
+      <div
       class="card boleto-card"
       style="margin-top: 10px; padding: 20px"
-      *ngFor="let vuelo of vuelos"
-
-
-
+      *ngFor="let vuelo of vuelos_ida"
     >
       <div class="row">
         <div class="col-md-6">
@@ -189,8 +208,8 @@
                 <div *ngFor="let precio of vuelo.precios" class="col-md-4 text-end" style="padding:10px;">
                     <div class="card" style="padding:10px;">
                         <h2>{{precio.nombre}}</h2>
-                        <h3>$ {{ precio.total }}</h3>
-                        <a class="btn btn-success" style="--bs-bg-opacity: 0.5;" href="/asientos/{{vuelo._id}}-{{precio.nombre}}-{{precio.asiento}}">Comprar</a>
+                        <h3>$ {{precio.total}}</h3>
+                        <a class="btn btn-success" style="--bs-bg-opacity: 0.5;" routerLink="/asientos/{{vuelo._id}}-{{precio.nombre}}-{{precio.asiento}}">Comprar</a>
                     </div>                    
                 </div>
             </div>
@@ -200,5 +219,48 @@
         <h5>Distancia aproximada: {{ vuelo.distancia_KM }} KM</h5>
       </div>
     </div>
+    </div>
+    <div *ngIf="vuelos_vuelta">
+      <div><h1 class="text-center">SELECCIONE SU VUELO DE VUELTA</h1></div>
+      <div
+      class="card boleto-card"
+      style="margin-top: 10px; padding: 20px"
+      *ngFor="let vuelo of vuelos_vuelta"
+    >
+      <div class="row">
+        <div class="col-md-6">
+            <div class="row">
+                <div class="col-md-4">
+                    <h2>{{ vuelo.lugar_origen_id.Ciudad }}</h2>
+                    <h4>{{ vuelo.lugar_origen_id.nombreAeropuerto }}</h4>
+                </div>
+                <div class="col-md-4">
+                    <!-- <fa-icon [icon]="faPlane"></fa-icon> -->
+                </div>
+                <div class="col-md-4">
+                    <h2>{{ vuelo.lugar_destino_id.Ciudad }}</h2>
+                    <h4>{{ vuelo.lugar_destino_id.nombreAeropuerto }}</h4>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="row">
+                <div class="col-md-4"></div>
+                <div *ngFor="let precio of vuelo.precios" class="col-md-4 text-end" style="padding:10px;">
+                    <div class="card" style="padding:10px;">
+                        <h2>{{precio.nombre}}</h2>
+                        <h3>$ {{precio.total}}</h3>
+                        <a class="btn btn-success" style="--bs-bg-opacity: 0.5;" routerLink="/asientos/{{vuelo._id}}-{{precio.nombre}}-{{precio.asiento}}">Comprar</a>
+                    </div>                    
+                </div>
+            </div>
+        </div>  
+      </div>
+      <div class="row">
+        <h5>Distancia aproximada: {{ vuelo.distancia_KM }} KM</h5>
+      </div>
+    </div>
+    </div>
+    
   </div>
 </div>
