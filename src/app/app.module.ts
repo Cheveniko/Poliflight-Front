@@ -52,7 +52,7 @@ import { SeleccionVueloComponent } from './seleccion-vuelo/seleccion-vuelo.compo
     SeatsioAngularModule,
     NgxPayPalModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
   ],
   providers: [VuelosService],
   bootstrap: [AppComponent],

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, HostListener} from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { VuelosService } from '../services/vuelos.service';
 import {SeatsioAngularModule} from '@seatsio/seatsio-angular'
@@ -228,6 +228,12 @@ export class AsientosComponent {
       this.clase=informacion[1].clase;
       this.asiento=informacion[1].precio;
     }
+  }
+
+  @HostListener('window:beforeunload', ['$event'])
+  unloadNotification($event: any): void {
+    
+    $event.returnValue = 'Se perderán los datos del formulario. ¿Estás seguro de que deseas salir?';
   }
 
 }

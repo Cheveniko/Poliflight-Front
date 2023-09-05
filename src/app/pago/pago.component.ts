@@ -1,157 +1,133 @@
-import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { IPayPalConfig, ICreateOrderRequest } from 'ngx-paypal';
-
-import { NgForm } from '@angular/forms';
+import { HttpClient } from '@angular/common/http';
+import { CookieService } from 'ngx-cookie-service';
 
 @Component({
   selector: 'app-pago',
   templateUrl: './pago.component.html',
   styleUrls: ['./pago.component.scss']
 })
-export class PagoComponent implements OnInit{
-  public defaultPrice: string = '9.99';
+export class PagoComponent implements OnInit {
   public payPalConfig?: IPayPalConfig;
+  showSuccess: boolean;
+  showError: boolean;
+  public showPaypalButtons: boolean;
+  public info: any;
+  correo: any;
+  persona: any;
 
-  public customerName = '';
-  public customerEmail = '';
-  public customerAddress = '';
-  public selectedPaymentMethod = '';
-  public cart: any[] = [];
-  public showSuccess: boolean = false;
-  public showCancel: boolean = false;
-  public showError: boolean = false;
 
-  items: {
-    name: any;
-    quantity: any;
-    category: string;
-    unit_amount: { currency_code: string; value: any };
-  }[] = [];
-  total = 0;
+  public subscriptionPrice: any; // Cambia el precio aquí
 
-  @ViewChild('priceElem', { static: false }) priceElem?: ElementRef;
 
-  constructor() {}
+  constructor(private http: HttpClient,
+    private cookieService: CookieService) {
+      
+    }
+
+  pay() {
+    this.showPaypalButtons = true;
+  }
+
+  back() {
+    this.showPaypalButtons = false;
+  }
 
   ngOnInit(): void {
-    this.initConfig('0');
-  }
-
-  addItemToCart(item: any): void {
-    let itemIndex = this.cart.findIndex((cartItem) => cartItem.id === item.id);
-    if (itemIndex === -1) {
-      this.cart.push({ ...item, quantity: 1 });
-    } else {
-      this.cart[itemIndex].quantity++;
-    }
-    this.updateTotal();
-  }
-
-  removeItemFromCart(item: any): void {
-    let itemIndex = this.cart.findIndex((cartItem) => cartItem.id === item.id);
-    if (itemIndex > -1) {
-      if (this.cart[itemIndex].quantity === 1) {
-        this.cart.splice(itemIndex, 1);
-      } else {
-        this.cart[itemIndex].quantity--;
-      }
-    }
-    this.updateTotal();
-  }
-
-  updateTotal() {
-    this.cart.forEach((cartItem) => {
-      this.items.push({
-        name: cartItem.name,
-        quantity: cartItem.quantity,
-        category: 'DIGITAL_GOODS',
-        unit_amount: {
-          currency_code: 'USD',
-          value: cartItem.price,
-        },
-      });
-      this.total += parseFloat(cartItem.price) * cartItem.quantity;
+    this.initConfig();
+    const cookieKeys = Object.keys(this.cookieService.getAll());
+    cookieKeys.forEach((key: string) => {
+       const cookieValue = this.cookieService.get(key);
+       console.log(`Cookie: ${key}, Valor: ${cookieValue}`);
     });
-    this.initConfig(this.total + '');
+    this.info = JSON.parse(this.cookieService.get('informacion'));
+    this.subscriptionPrice = (this.info.precio_total.toFixed(2) * 0.12) + this.info.precio_total;
+    console.log(this.subscriptionPrice)
+    
   }
 
-  private initConfig(price: string): void {
+  finalizar(){
+
+    let savedData = this.cookieService.get('userData');
+    let parsedData = JSON.parse(savedData);
+    this.persona = parsedData.nombre;
+    this.correo = parsedData.email;
+    let dataToSend = {
+      correo: this.correo,
+      nombre: this.persona,
+      infor: this.info
+    };
+    console.log("Inof anla dsfj l")
+    console.log(dataToSend);
+    
+    this.http.post('http://localhost:5000/send_email', dataToSend)
+      .subscribe(response => {
+        console.log('Respuesta del servidor:', response);
+      });
+  }
+
+  private initConfig(): void {
     this.payPalConfig = {
       currency: 'USD',
       clientId: 'AYfU82BZXXaVv95vSW87p5wF45RWZIqDAqnaTpebkw91wd6s5lCZTJa0uikOXZhuSQwH4iITxhRzC0bX',
-      createOrderOnClient: (data: any) =>
-        <ICreateOrderRequest>{
-          intent: 'CAPTURE',
-          purchase_units: [
-            {
-              amount: {
-                currency_code: 'USD',
-                value: price,
-                breakdown: {
-                  item_total: {
-                    currency_code: 'USD',
-                    value: price,
-                  },
+      createOrderOnClient: (data) => <ICreateOrderRequest>{
+        intent: 'CAPTURE',
+        purchase_units: [
+          {
+            amount: {
+              currency_code: 'USD',
+              value: this.subscriptionPrice, // Usar la variable aquí
+              breakdown: {
+                item_total: {
+                  currency_code: 'USD',
+                  value: this.subscriptionPrice, // Usar la variable aquí
                 },
               },
-              items: this.items,
             },
-          ],
-        },
+            items: [
+              {
+                name: 'Servicio de gestion de boletos PoliFinghts',
+                quantity: '1',
+                category: 'DIGITAL_GOODS',
+                unit_amount: {
+                  currency_code: 'USD',
+                  value: this.subscriptionPrice, // Usar la variable aquí
+                },
+              },
+            ],
+          },
+        ],
+      },
       advanced: {
         commit: 'true',
       },
       style: {
-        shape: 'pill',
-        color: 'blue',
         label: 'paypal',
         layout: 'vertical',
       },
-      onApprove: (
-        data: any,
-        actions: { order: { get: () => Promise<any> } }
-      ) => {
-        console.log(
-          'onApprove - transaction was approved, but not authorized',
-          data,
-          actions
-        );
+      onApprove: (data, actions) => {
+        console.log('onApprove - transaction was approved, but not authorized', data, actions);
         actions.order.get().then((details: any) => {
-          console.log(
-            'onApprove - you can get full order details inside onApprove: ',
-            details
-          );
+          console.log('onApprove - you can get full order details inside onApprove: ', details);
         });
       },
-      onClientAuthorization: (data: any) => {
-        console.log(
-          'onClientAuthorization - you should probably inform your server about completed transaction at this point',
-          data
-        );
+      onClientAuthorization: (data) => {
+        console.log('onClientAuthorization - you should probably inform your server about completed transaction at this point', data);
         this.showSuccess = true;
+        this.showPaypalButtons = false;
       },
-      onCancel: (data: any, actions: any) => {
+      onCancel: (data, actions) => {
         console.log('OnCancel', data, actions);
-        this.showCancel = true;
+        this.showSuccess = false;
       },
-      onError: (err: any) => {
+      onError: err => {
         console.log('OnError', err);
         this.showError = true;
       },
-      onClick: (data: any, actions: any) => {
+      onClick: (data, actions) => {
         console.log('onClick', data, actions);
-        this.resetStatus();
-      },
-      onInit: (data: any, actions: any) => {
-        console.log('onInit', data, actions);
       },
     };
-  }
-
-  private resetStatus(): void {
-    this.items = [];
-    this.total = 0;
-    this.showError = false;
-    this.showSuccess = false;
   }
 }
