@@ -18,12 +18,13 @@ export class PagoComponent implements OnInit {
   persona: any;
 
 
+
   public subscriptionPrice: any; // Cambia el precio aquí
 
 
   constructor(private http: HttpClient,
     private cookieService: CookieService) {
-      
+      this.subscriptionPrice=0; 
     }
 
   pay() {
@@ -35,15 +36,23 @@ export class PagoComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.initConfig();
-    const cookieKeys = Object.keys(this.cookieService.getAll());
-    cookieKeys.forEach((key: string) => {
-       const cookieValue = this.cookieService.get(key);
-       console.log(`Cookie: ${key}, Valor: ${cookieValue}`);
+    // const cookieKeys = Object.keys(this.cookieService.getAll());
+    // cookieKeys.forEach((key: string) => {
+    //   //  const cookieValue = this.cookieService.get(key);
+    //   //  console.log(`Cookie: ${key}, Valor: ${cookieValue}`);
+    // });
+    this.info = JSON.parse(this.cookieService.get('informacionPasajeros'));
+    this.info.forEach((element:any)=>{
+      console.log(element.precio_total);
+      this.subscriptionPrice = this.subscriptionPrice + element.precio_total;
     });
-    this.info = JSON.parse(this.cookieService.get('informacion'));
-    this.subscriptionPrice = (this.info.precio_total.toFixed(2) * 0.12) + this.info.precio_total;
     console.log(this.subscriptionPrice)
+    
+    this.subscriptionPrice = parseFloat(this.subscriptionPrice)+(parseFloat(this.subscriptionPrice)*0.12);
+    this.subscriptionPrice = parseFloat(this.subscriptionPrice.toFixed(2));
+    console.log(this.subscriptionPrice)
+    this.initConfig();
+
     
   }
 

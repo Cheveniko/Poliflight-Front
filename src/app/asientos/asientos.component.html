@@ -34,26 +34,42 @@
                   <div>
                     <label for="asiento" class="form-label">Asiento:</label>
                     <input type="text" name="asiento" formControlName="nombre" class="form-control" value="{{seleccion.adultos_mayores[i]}}" readonly>
+                    
                   </div>
                   <div>
                     <label for="nombre" class="form-label">Nombre:</label>
                     <input type="text" name="nombre" formControlName="nombre" class="form-control">
+                    <label class="text-danger" *ngIf="getError(formGroupMayores.get('nombre'))">
+                      {{ getError(formGroupMayores.get('nombre')) }}
+                    </label>
                   </div>
                   <div>
                     <label for="apellido" class="form-label">Apellido:</label>
                     <input type="text" name="apellido" formControlName="apellido" class="form-control">
+                    <label class="text-danger" *ngIf="getError(formGroupMayores.get('apellido'))">
+                      {{ getError(formGroupMayores.get('apellido')) }}
+                    </label>
                   </div>
                   <div>
                     <label for="nacionalidad" class="form-label">Nacionalidad:</label>
                     <input type="text" name="nacionalidad" formControlName="nacionalidad" class="form-control">
+                    <label class="text-danger" *ngIf="getError(formGroupMayores.get('nacionalidad'))">
+                      {{ getError(formGroupMayores.get('nacionalidad')) }}
+                    </label>
                   </div>
                   <div>
                     <label for="pasaporte" class="form-label">Pasaporte:</label>
                     <input type="text" name="pasaporte" formControlName="pasaporte" class="form-control">
+                    <label class="text-danger" *ngIf="getError(formGroupMayores.get('pasaporte'))">
+                      {{ getError(formGroupMayores.get('pasaporte')) }}
+                    </label>
                   </div>
                   <div>
                     <label for="fechaNacimiento" class="form-label">Fecha de nacimiento:</label>
                     <input type="date" name="fechaNacimiento" formControlName="fechaNacimiento" class="form-control">
+                    <label class="text-danger" *ngIf="getError(formGroupMayores.get('fechaNacimiento'))">
+                      {{ getError(formGroupMayores.get('fechaNacimiento')) }}
+                    </label>
                   </div>
                   <br>
                   <div class="separator" style="width: 100%; height:20px; border:0; border-top:2px solid black;"></div>
@@ -78,22 +94,37 @@
                   <div>
                     <label for="nombre" class="form-label">Nombre:</label>
                     <input type="text" name="nombre" formControlName="nombre" class="form-control">
+                    <label class="text-danger" *ngIf="getError(formGroupAdultos.get('nombre'))">
+                      {{ getError(formGroupAdultos.get('nombre')) }}
+                    </label>
                   </div>
                   <div>
                     <label for="apellido" class="form-label">Apellido:</label>
                     <input type="text" name="apellido" formControlName="apellido" class="form-control">
+                    <label class="text-danger" *ngIf="getError(formGroupAdultos.get('apellido'))">
+                      {{ getError(formGroupAdultos.get('apellido')) }}
+                    </label>
                   </div>
                   <div>
                     <label for="nacionalidad" class="form-label">Nacionalidad:</label>
                     <input type="text" name="nacionalidad" formControlName="nacionalidad" class="form-control">
+                    <label class="text-danger" *ngIf="getError(formGroupAdultos.get('nacionalidad'))">
+                      {{ getError(formGroupAdultos.get('nacionalidad')) }}
+                    </label>
                   </div>
                   <div>
                     <label for="pasaporte" class="form-label">Pasaporte:</label>
                     <input type="text" name="pasaporte" formControlName="pasaporte" class="form-control">
+                    <label class="text-danger" *ngIf="getError(formGroupAdultos.get('pasaporte'))">
+                      {{ getError(formGroupAdultos.get('pasaporte')) }}
+                    </label>
                   </div>
                   <div>
                     <label for="fechaNacimiento" class="form-label">Fecha de nacimiento:</label>
                     <input type="date" name="fechaNacimiento" formControlName="fechaNacimiento" class="form-control">
+                    <label class="text-danger" *ngIf="getError(formGroupAdultos.get('fechaNacimiento'))">
+                      {{ getError(formGroupAdultos.get('fechaNacimiento')) }}
+                    </label>
                   </div>
                   <br>
                   <div class="separator" style="width: 100%; height:20px; border:0; border-top:2px solid black;"></div>
@@ -118,22 +149,37 @@
                   <div>
                     <label for="nombre" class="form-label">Nombre:</label>
                     <input type="text" name="nombre" formControlName="nombre" class="form-control">
+                    <label class="text-danger" *ngIf="getError(formGroupNinos.get('nombre'))">
+                      {{ getError(formGroupNinos.get('nombre')) }}
+                    </label>
                   </div>
                   <div>
                     <label for="apellido" class="form-label">Apellido:</label>
                     <input type="text" name="apellido" formControlName="apellido" class="form-control">
+                    <label class="text-danger" *ngIf="getError(formGroupNinos.get('apellido'))">
+                      {{ getError(formGroupNinos.get('apellido')) }}
+                    </label>
                   </div>
                   <div>
                     <label for="nacionalidad" class="form-label">Nacionalidad:</label>
                     <input type="text" name="nacionalidad" formControlName="nacionalidad" class="form-control">
+                    <label class="text-danger" *ngIf="getError(formGroupNinos.get('nacionalidad'))">
+                      {{ getError(formGroupNinos.get('nacionalidad')) }}
+                    </label>
                   </div>
                   <div>
                     <label for="pasaporte" class="form-label">Pasaporte:</label>
                     <input type="text" name="pasaporte" formControlName="pasaporte" class="form-control">
+                    <label class="text-danger" *ngIf="getError(formGroupNinos.get('pasaporte'))">
+                      {{ getError(formGroupNinos.get('pasaporte')) }}
+                    </label>
                   </div>
                   <div>
                     <label for="fechaNacimiento" class="form-label">Fecha de nacimiento:</label>
                     <input type="date" name="fechaNacimiento" formControlName="fechaNacimiento" class="form-control">
+                    <label class="text-danger" *ngIf="getError(formGroupNinos.get('fechaNacimiento'))">
+                      {{ getError(formGroupNinos.get('fechaNacimiento')) }}
+                    </label>
                   </div>
                   <br>
                   <div class="separator" style="width: 100%; height:20px; border:0; border-top:2px solid black;"></div>
@@ -158,22 +204,37 @@
                   <div>
                     <label for="nombre" class="form-label">Nombre:</label>
                     <input type="text" name="nombre" formControlName="nombre" class="form-control">
+                    <label class="text-danger" *ngIf="getError(formGroupInfantes.get('nombre'))">
+                      {{ getError(formGroupInfantes.get('nombre')) }}
+                    </label>
                   </div>
                   <div>
                     <label for="apellido" class="form-label">Apellido:</label>
                     <input type="text" name="apellido" formControlName="apellido" class="form-control">
+                    <label class="text-danger" *ngIf="getError(formGroupInfantes.get('apellido'))">
+                      {{ getError(formGroupInfantes.get('apellido')) }}
+                    </label>
                   </div>
                   <div>
                     <label for="nacionalidad" class="form-label">Nacionalidad:</label>
                     <input type="text" name="nacionalidad" formControlName="nacionalidad" class="form-control">
+                    <label class="text-danger" *ngIf="getError(formGroupInfantes.get('nacionalidad'))">
+                      {{ getError(formGroupInfantes.get('nacionalidad')) }}
+                    </label>
                   </div>
                   <div>
                     <label for="pasaporte" class="form-label">Pasaporte:</label>
                     <input type="text" name="pasaporte" formControlName="pasaporte" class="form-control">
+                    <label class="text-danger" *ngIf="getError(formGroupInfantes.get('pasaporte'))">
+                      {{ getError(formGroupInfantes.get('pasaporte')) }}
+                    </label>
                   </div>
                   <div>
                     <label for="fechaNacimiento" class="form-label">Fecha de nacimiento:</label>
                     <input type="date" name="fechaNacimiento" formControlName="fechaNacimiento" class="form-control">
+                    <label class="text-danger" *ngIf="getError(formGroupInfantes.get('fechaNacimiento'))">
+                      {{ getError(formGroupInfantes.get('fechaNacimiento')) }}
+                    </label>
                   </div>
                   <br>
                   <div class="separator" style="width: 100%; height:20px; border:0; border-top:2px solid black;"></div>

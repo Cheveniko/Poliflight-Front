@@ -12,7 +12,9 @@ import { AbstractControl, FormControl, FormGroup, Validators } from '@angular/fo
 export class ItinerarioComponent implements OnInit{
   
   constructor(private cookieService: CookieService, 
-    private _vueloService: VuelosService,) { }
+    private _vueloService: VuelosService,) { 
+      // console.log(JSON.parse(this.cookieService.get('informacionPasajeros')));
+    }
 
   form: FormGroup = new FormGroup({
     email: new FormControl('', [Validators.required, this.customeEmailValidator]),
@@ -101,13 +103,18 @@ export class ItinerarioComponent implements OnInit{
 
   ngOnInit(): void {
 
-    this.data = [JSON.parse(this.cookieService.get('informacion'))];
-    console.log(this.data)
-    
-    this.mayores = this.organizarArreglo(this.data, 'adultos_mayores');
-    this.adultos = this.organizarArreglo(this.data, 'adultos');
-    this.ninos = this.organizarArreglo(this.data, 'ninos');
-    this.infantes = this.organizarArreglo(this.data, 'infantes');
+    this.data = JSON.parse(this.cookieService.get('informacionPasajeros'));
+
+    this.data.forEach(element=>{
+      // console.log(element);
+      let mayoresT = element.distribucion_asientos.adultos_mayores;
+      let adultosT = element.distribucion_asientos.adultos;
+      let ninosT = element.distribucion_asientos.ninos;
+      let infantesT = element.distribucion_asientos.infantes;
+      // console.log(element.distribucion_asientos);
+
+    })
+  
     
     // guardamos los asientos
     this.resumeVuelo.push(this.mayores);
@@ -117,19 +124,20 @@ export class ItinerarioComponent implements OnInit{
 
     this.data.forEach(async element => {
       // info para la tabla de asientos
-      this.mayores = element.distribucion_asientos.adultos_mayores;
-      this.adultos = element.distribucion_asientos.adultos;
-      this.ninos = element.distribucion_asientos.ninos;
-      this.infantes = element.distribucion_asientos.infantes;
+      // console.log(element.distribucion_asientos.adultos_mayores);
+      let mayoresT = element.distribucion_asientos.adultos_mayores;
+      let adultosT = element.distribucion_asientos.adultos;
+      let ninosT = element.distribucion_asientos.ninos;
+      let infantesT = element.distribucion_asientos.infantes;
       this.precioBase = parseFloat(element.precio_base).toFixed(2);
       this.precioTotal = parseFloat(element.precio_total).toFixed(2);
       let todos = element.asientos.length;
-      let precioMayores = this.precioBase * 0.5 *this.mayores.length;
-      let precioAdultos = this.precioBase * this.adultos.length;
-      let precioNinos = this.precioBase * this.ninos.length;
-      let precioInfantes = this.precioBase * 0;
+      let precioMayores = this.precioBase * 0.5 *mayoresT.length;
+      let precioAdultos = this.precioBase * adultosT.length;
+      let precioNinos = this.precioBase * ninosT.length;
+      let precioInfantes = 0;
       let idVuelo = element.vuelo_id;
-      console.log(this.precioTotal)
+      // console.log(this.precioTotal)
       const vuelo = await this.llamarVuelo(idVuelo).toPromise();
       this.hacia = vuelo.lugar_destino_id.Ciudad;
       this.desde = vuelo.lugar_origen_id.Ciudad;
@@ -138,14 +146,14 @@ export class ItinerarioComponent implements OnInit{
       let clase = element.clase;
       let totalMaletas = 1;
       let fecha = vuelo.fecha;
-      console.log(this.hacia);
+      // console.log(this.hacia);
       let asientos ={
           hacia: this.hacia,
           desde: this.desde,
-          mayores: this.mayores,
-          adultos: this.adultos,
-          ninos: this.ninos,
-          infantes: this.infantes,
+          mayores: mayoresT,
+          adultos: adultosT,
+          ninos: ninosT,
+          infantes: infantesT,
           precio_base: this.precioBase,
           precioAdultos: precioAdultos,
           precioMayores: precioMayores,
@@ -167,13 +175,16 @@ export class ItinerarioComponent implements OnInit{
 
       this.asientos.push(asientos);
       this.datos.push(resume);
-      this.subtotal = this.subtotal + parseFloat(this.precioTotal);
-      this.iva = parseFloat(this.precioTotal) * 0.12;
-      this.totalFinal = this.subtotal + this.iva;
+      this.subtotal = this.subtotal + parseFloat(element.precio_total);
+      this.iva = this.subtotal * 0.12;
+      this.iva = parseFloat(this.iva.toFixed(2));
+    this.totalFinal = this.subtotal + this.iva;
+    // console.log(this.totalFinal);
+      console.log(asientos);
       
     });
-
-    console.log(this.totalFinal);
+    console.log(this.subtotal);
+    
        
   }
   organizarArreglo(infor: any[], name:string){

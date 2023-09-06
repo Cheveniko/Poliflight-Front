@@ -7,7 +7,7 @@ import { NgForm } from '@angular/forms';
 import { NgModel } from '@angular/forms';
 import { CookieService } from 'ngx-cookie-service';
 import { Pasajeroinfo } from '../shared/models/pasajero.model';
-import { FormBuilder, FormGroup, Validators, FormArray } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators, FormArray, FormControl, AbstractControl} from '@angular/forms';
 
 
 
@@ -42,48 +42,20 @@ export class AsientosComponent {
       
     });
       this.seleccion = {adultos_mayores:[],adultos:[],ninos:[],infantes:[]};
-      this.pasajeros = JSON.parse(this.cookieService.get('pasajeros')) 
-      console.log(JSON.parse(this.cookieService.get('pasajeros')) )
+      this.pasajeros = JSON.parse(this.cookieService.get('busqueda')).pasajeros 
+      // console.log(JSON.parse(this.cookieService.get('pasajeros')) )
       this.informacionPasajeros = {adultos_mayores:this.fb.array([]), adultos:this.fb.array([]), ninos:this.fb.array([]), infantes:this.fb.array([])}
       for(let i=0;i<this.pasajeros.adultos_mayores;i++){
-        this.informacionPasajeros.adultos_mayores.push(this.fb.group({
-          asiento: '',
-          nombre: '',
-          apellido: '',
-          nacionalidad: '',
-          pasaporte: '',
-          fechaNacimiento:''
-        }));
+        this.informacionPasajeros.adultos_mayores.push(this.generarFormGroup(this.customeAdultoMayorValidator));
       }
       for(let i=0;i<this.pasajeros.adultos;i++){
-        this.informacionPasajeros.adultos.push(this.fb.group({
-          asiento: '',
-          nombre: '',
-          apellido: '',
-          nacionalidad: '',
-          pasaporte: '',
-          fechaNacimiento:''
-        }));
+        this.informacionPasajeros.adultos.push(this.generarFormGroup(this.customeAdultoValidator));
       }
       for(let i=0;i<this.pasajeros.ninos;i++){
-        this.informacionPasajeros.ninos.push(this.fb.group({
-          asiento: '',
-          nombre: '',
-          apellido: '',
-          nacionalidad: '',
-          pasaporte: '',
-          fechaNacimiento:''
-        }));
+        this.informacionPasajeros.ninos.push(this.generarFormGroup(this.customeNinoValidator));
       }
       for(let i=0;i<this.pasajeros.infantes;i++){
-        this.informacionPasajeros.infantes.push(this.fb.group({
-          asiento: '',
-          nombre: '',
-          apellido: '',
-          nacionalidad: '',
-          pasaporte: '',
-          fechaNacimiento:''
-        }));
+        this.informacionPasajeros.infantes.push(this.generarFormGroup(this.customeInfanteValidator));
       }
       let ticketTypesMap = [
         { ticketType:'Adulto Mayor', price: this.asiento*0.5},
@@ -202,7 +174,10 @@ export class AsientosComponent {
     if(this.tipo=='ida'){
       informacionPasajeros[0]=informacion;
       this.cookieService.set('informacionPasajeros',JSON.stringify(informacionPasajeros))
-      this.router.navigate(["/vuelos/","vuelta"]);
+      if (JSON.parse(this.cookieService.get('busqueda')).options==1){
+        this.router.navigate(["/itinerario/"]);
+      }
+      else{this.router.navigate(["/vuelos/","vuelta"]);}
     }
     if(this.tipo=='vuelta'){
       informacionPasajeros[1]=informacion;
@@ -228,6 +203,78 @@ export class AsientosComponent {
       this.clase=informacion[1].clase;
       this.asiento=informacion[1].precio;
     }
+  }
+
+  generarFormGroup(validator:any):any{
+    return this.fb.group({
+      asiento: new FormControl('', [Validators.required]),
+      nombre: new FormControl('', [Validators.required]),
+      apellido: new FormControl('', [Validators.required]),
+      nacionalidad: new FormControl('', [Validators.required]),
+      pasaporte: new FormControl('', [Validators.required]),
+      fechaNacimiento:new FormControl('', [Validators.required, validator])
+    });
+  }
+  getError(control: any): string {
+    if (control.errors?.required && control.touched) {
+      return 'Este campo es requerido';
+    } else if (control.errors?.edadError && control.touched) {
+      return 'Verifica la fecha ingresada!';
+    } else if (control.errors?.phoneError && control.touched) {
+      return 'Please enter a valid phone number!';
+    } else {
+      return '';
+    }
+  }
+
+  customeAdultoMayorValidator(control:AbstractControl) {
+    
+    const value = control.value;
+    let hoy = new Date();
+    let nacimiento = new Date(value);
+    let edad =hoy.getFullYear() - nacimiento.getFullYear()
+    console.log(edad);
+    if(edad<=65 && edad>0) 
+      return {
+        edadError:true
+      }
+    else return null;
+  }
+  customeAdultoValidator(control:AbstractControl) {
+    
+    const value = control.value;
+    let hoy = new Date();
+    let nacimiento = new Date(value);
+    let edad =hoy.getFullYear() - nacimiento.getFullYear()
+    if(edad<18 && edad>65 && edad>0) 
+      return {
+        edadError:true
+      }
+    else return null;
+  }
+  customeNinoValidator(control:AbstractControl) {
+    
+    const value = control.value;
+    let hoy = new Date();
+    let nacimiento = new Date(value);
+    let edad =hoy.getFullYear() - nacimiento.getFullYear()
+    if(edad<2 || edad>=18 || edad >0) 
+      return {
+        edadError:true
+      }
+    else return null;
+  }
+  customeInfanteValidator(control:AbstractControl) {
+    
+    const value = control.value;
+    let hoy = new Date();
+    let nacimiento = new Date(value);
+    let edad =hoy.getFullYear() - nacimiento.getFullYear()
+    if(edad>2 || edad>0) 
+      return {
+        edadError:true
+      }
+    else return null;
   }
 
   @HostListener('window:beforeunload', ['$event'])
