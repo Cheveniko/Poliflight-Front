@@ -29,6 +29,8 @@ export class AsientosComponent {
   seleccion:any;
   title:string;
   tipo:string;
+  numeroMaletas: number = 0;
+  asientoVal:boolean = false;
   constructor(
     private route:ActivatedRoute,
     private router:Router,
@@ -95,6 +97,7 @@ export class AsientosComponent {
   }
   
   reservarAsientos(form:any){
+    this.asientoVal = true;
     console.log(document.getElementsByName('selectedSeatsField')[0].getAttribute('value')?.split(','));
     this.asientos=document.getElementsByName('selectedSeatsField')[0].getAttribute('value')?.split(',');
     this.consultarEstado(this.asientos);
@@ -143,6 +146,7 @@ export class AsientosComponent {
       precio_total:total,
       vuelo_id:this.vuelo_id,
       clase:this.clase,
+      maletas: this.numeroMaletas,
       asientos:this.asientos,
       distribucion_asientos:this.seleccion,
       pasajeros: {
@@ -222,11 +226,39 @@ export class AsientosComponent {
       return 'Verifica la fecha ingresada!';
     } else if (control.errors?.phoneError && control.touched) {
       return 'Please enter a valid phone number!';
-    } else {
+    }else if(control.value){
+      const dateOfBirth = new Date(control.value);
+      const age = this.calculateAge(dateOfBirth);
+      if (age < 18) {
+        return 'Debes ser mayor de 18 años para pertenecer a esta categoria';
+      }else{
+        return '';
+      }
+    }else {
       return '';
     }
   }
 
+  calculateAge(dateOfBirth: Date): number {
+    const today = new Date();
+    const birthDate = new Date(dateOfBirth);
+    let age = today.getFullYear() - birthDate.getFullYear();
+    const month = today.getMonth() - birthDate.getMonth();
+    if (month < 0 || (month === 0 && today.getDate() < birthDate.getDate())) {
+      age--;
+    }
+    return age;
+  }
+
+  incrementarMaletas() {
+    this.numeroMaletas++;
+  }
+
+  decrementarMaletas() {
+    if (this.numeroMaletas > 0) {
+      this.numeroMaletas--;
+    }
+  }
   customeAdultoMayorValidator(control:AbstractControl) {
     
     const value = control.value;

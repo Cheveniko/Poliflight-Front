@@ -12,5 +12,8 @@ export class HomeComponent implements OnInit{
   ngOnInit(): void {
     // Elimina la cookie al cargar la página principal
     this.cookieService.delete('pasajeros');
+    this.cookieService.delete('informacionPasajeros');
+    this.cookieService.delete('informacion');
+    this.cookieService.delete('busqueda');
   }
 }

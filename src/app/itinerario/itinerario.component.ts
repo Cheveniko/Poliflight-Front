@@ -98,6 +98,7 @@ export class ItinerarioComponent implements OnInit{
   iva: number = 0;
   subtotal: number = 0;
   totalFinal: number = 0;
+  totalMaletas: number = 0;
 
   
 
@@ -105,16 +106,6 @@ export class ItinerarioComponent implements OnInit{
 
     this.data = JSON.parse(this.cookieService.get('informacionPasajeros'));
 
-    this.data.forEach(element=>{
-      // console.log(element);
-      let mayoresT = element.distribucion_asientos.adultos_mayores;
-      let adultosT = element.distribucion_asientos.adultos;
-      let ninosT = element.distribucion_asientos.ninos;
-      let infantesT = element.distribucion_asientos.infantes;
-      // console.log(element.distribucion_asientos);
-
-    })
-  
     
     // guardamos los asientos
     this.resumeVuelo.push(this.mayores);
@@ -125,15 +116,19 @@ export class ItinerarioComponent implements OnInit{
     this.data.forEach(async element => {
       // info para la tabla de asientos
       // console.log(element.distribucion_asientos.adultos_mayores);
+      
       let mayoresT = element.distribucion_asientos.adultos_mayores;
+      let maletas
       let adultosT = element.distribucion_asientos.adultos;
+      
       let ninosT = element.distribucion_asientos.ninos;
       let infantesT = element.distribucion_asientos.infantes;
       this.precioBase = parseFloat(element.precio_base).toFixed(2);
-      this.precioTotal = parseFloat(element.precio_total).toFixed(2);
+      let precioTotal = parseFloat(element.precio_total).toFixed(2);
       let todos = element.asientos.length;
       let precioMayores = this.precioBase * 0.5 *mayoresT.length;
       let precioAdultos = this.precioBase * adultosT.length;
+      console.log("element: ",this.precioBase)
       let precioNinos = this.precioBase * ninosT.length;
       let precioInfantes = 0;
       let idVuelo = element.vuelo_id;
@@ -144,7 +139,8 @@ export class ItinerarioComponent implements OnInit{
       let numVuelo = vuelo.numero_de_vuelo;
       let distancia = vuelo.distancia_KM;
       let clase = element.clase;
-      let totalMaletas = 1;
+      let maleta = element.maletas;
+      this.totalMaletas = this.totalMaletas + element.maletas;
       let fecha = vuelo.fecha;
       // console.log(this.hacia);
       let asientos ={
@@ -168,22 +164,21 @@ export class ItinerarioComponent implements OnInit{
         numVuelo: numVuelo,
         fecha: fecha,
         distancia: distancia,
-        totalMaletas: totalMaletas,
-        precioTotal: this.precioTotal,
+        totalMaletas: maleta,
+        precioTotal: precioTotal,
         clase: clase,
       }
 
       this.asientos.push(asientos);
       this.datos.push(resume);
       this.subtotal = this.subtotal + parseFloat(element.precio_total);
+      this.subtotal = parseFloat(this.subtotal.toFixed(2));
       this.iva = this.subtotal * 0.12;
       this.iva = parseFloat(this.iva.toFixed(2));
-    this.totalFinal = this.subtotal + this.iva;
-    // console.log(this.totalFinal);
-      console.log(asientos);
-      
+      this.totalFinal =this.subtotal + this.iva + (this.totalMaletas*65);
+      this.totalFinal = parseFloat(this.totalFinal.toFixed(2));
     });
-    console.log(this.subtotal);
+    
     
        
   }

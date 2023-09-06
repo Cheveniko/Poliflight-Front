@@ -27,7 +27,7 @@ export class FormularioVueloV2Component {
   public max_ninos:number;
   public max_infantes:number;
   public max_adultos_mayores:number;
-  public options:number;
+  public options:string = "1";
   vuelos_ida:any[];
   vuelos_vuelta:any[];
   aeropuertos:any;
@@ -58,7 +58,7 @@ export class FormularioVueloV2Component {
       this.max_ninos=9;
       this.max_infantes=5;
       this.max_adultos_mayores=9;
-      this.options=1;
+
       this.existe_ida=false;
       this.existe_vuelta=false;
 }

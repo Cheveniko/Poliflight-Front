@@ -14,7 +14,7 @@
               <th style="padding: 8px; background-color: #f2f2f2; font-size: 12px;">Vuelo</th>
               <th style="padding: 8px; background-color: #f2f2f2; font-size: 12px;">Distancia</th>
               <th style="padding: 8px; background-color: #f2f2f2; font-size: 12px;">Salida</th>
-              <th style="padding: 8px; background-color: #f2f2f2; font-size: 12px;">Maleta</th>
+              <th style="padding: 8px; background-color: #f2f2f2; font-size: 12px;">Maleta/s</th>
               <th style="padding: 8px; background-color: #f2f2f2; font-size: 12px;">Total Base</th>
               <th style="padding: 8px; background-color: #f2f2f2; font-size: 12px;">Clase</th>
           </tr>
@@ -25,7 +25,7 @@
               <td style="padding: 8px; font-size: 12px;">{{dato.numVuelo}}</td>
               <td style="padding: 8px; font-size: 12px;">{{dato.distancia}} km</td>
               <td style="padding: 8px; font-size: 12px;">{{dato.fecha}}</td>
-              <td style="padding: 8px; font-size: 12px;">{{dato.totalMaletas}}</td>
+              <td style="padding: 8px; font-size: 12px;">${{dato.totalMaletas*65}} ({{dato.totalMaletas}})</td>
               <td style="padding: 8px; font-size: 12px;">${{dato.precioTotal}}</td>
               <td style="padding: 8px; font-size: 12px;">{{dato.clase}}</td>
           </tr>
@@ -166,6 +166,10 @@
               <tr>
                   <td class="concept">Subtotal</td>
                   <td class="highlighted-value">${{this.subtotal}}</td>
+              </tr>
+              <tr>
+                <td class="concept">Maleta/s</td>
+                <td class="highlighted-value">${{this.totalMaletas*65}}</td>
               </tr>
               <tr>
                   <td class="concept">IVA (12%)</td>

@@ -1,10 +1,14 @@
 <!-- <p class="display-5">Escoge tus asientos</p> -->
 
   <div class="row">
-    <div class="text-center"><h1>{{title}}</h1></div>
+    <div class="text-center">
+      <h1 class="elegante-titulo">{{ title }}</h1>
+    </div>
     <div class="col-md-6">
       <form #ventaForm="ngForm" (ngSubmit)="reservarAsientos(ventaForm)">
-        <h2>Escoge tus asientos</h2>
+        <h2>
+          <i class="fas fa-couch"></i> Escoge tus asientos
+        </h2>
         <div style="height: 1000px">
           <si-seatsio-seating-chart [config]="config"></si-seatsio-seating-chart>
         </div>
@@ -19,233 +23,259 @@
       </form>
     </div>
     <div class="col-md-6">
-      <h2>Información de los pasajeros</h2>
-      <div class="accordion mt-3" id="accordionExample" >
-        <div class="accordion-item" *ngIf="pasajeros.adultos_mayores>0">
-          <h2 class="accordion-header" id="headingOne">
-            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
-              Adultos Mayores {{pasajeros.adultos_mayores}}
-            </button>
-          </h2>
-          <div id="collapseOne" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
-              <!-- Contenido de la sección -->
-              <div class="accordion-body">
-                <div *ngFor="let formGroupMayores of informacionPasajeros.adultos_mayores.controls,let i = index" [formGroup]="formGroupMayores" class="form-group">
-                  <div>
-                    <label for="asiento" class="form-label">Asiento:</label>
-                    <input type="text" name="asiento" formControlName="nombre" class="form-control" value="{{seleccion.adultos_mayores[i]}}" readonly>
-                    
-                  </div>
-                  <div>
-                    <label for="nombre" class="form-label">Nombre:</label>
-                    <input type="text" name="nombre" formControlName="nombre" class="form-control">
-                    <label class="text-danger" *ngIf="getError(formGroupMayores.get('nombre'))">
-                      {{ getError(formGroupMayores.get('nombre')) }}
-                    </label>
-                  </div>
-                  <div>
-                    <label for="apellido" class="form-label">Apellido:</label>
-                    <input type="text" name="apellido" formControlName="apellido" class="form-control">
-                    <label class="text-danger" *ngIf="getError(formGroupMayores.get('apellido'))">
-                      {{ getError(formGroupMayores.get('apellido')) }}
-                    </label>
-                  </div>
-                  <div>
-                    <label for="nacionalidad" class="form-label">Nacionalidad:</label>
-                    <input type="text" name="nacionalidad" formControlName="nacionalidad" class="form-control">
-                    <label class="text-danger" *ngIf="getError(formGroupMayores.get('nacionalidad'))">
-                      {{ getError(formGroupMayores.get('nacionalidad')) }}
-                    </label>
-                  </div>
-                  <div>
-                    <label for="pasaporte" class="form-label">Pasaporte:</label>
-                    <input type="text" name="pasaporte" formControlName="pasaporte" class="form-control">
-                    <label class="text-danger" *ngIf="getError(formGroupMayores.get('pasaporte'))">
-                      {{ getError(formGroupMayores.get('pasaporte')) }}
-                    </label>
-                  </div>
-                  <div>
-                    <label for="fechaNacimiento" class="form-label">Fecha de nacimiento:</label>
-                    <input type="date" name="fechaNacimiento" formControlName="fechaNacimiento" class="form-control">
-                    <label class="text-danger" *ngIf="getError(formGroupMayores.get('fechaNacimiento'))">
-                      {{ getError(formGroupMayores.get('fechaNacimiento')) }}
-                    </label>
-                  </div>
-                  <br>
-                  <div class="separator" style="width: 100%; height:20px; border:0; border-top:2px solid black;"></div>
-                  <!-- <button (click)=""></button> -->
-                </div>
-            </div>
-          </div>
-        </div>
-        <div class="accordion-item" *ngIf="pasajeros.adultos>0">
-            <h2 class="accordion-header" id="headingTwo">
-              <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseOne">
-                Adultos {{pasajeros.adultos}}
+      <h2>
+        <i class="fas fa-user"></i> Información de los pasajeros
+      </h2>
+      <div *ngIf="asientoVal">
+        <div class="accordion mt-3" id="accordionExample" >
+          <div class="accordion-item" *ngIf="pasajeros.adultos_mayores>0">
+            <h2 class="accordion-header" id="headingOne">
+              <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
+                Adultos Mayores {{pasajeros.adultos_mayores}}
               </button>
             </h2>
-            <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#accordionExample">
-              <div class="accordion-body">
-                <div *ngFor="let formGroupAdultos of informacionPasajeros.adultos.controls,let i = index" [formGroup]="formGroupAdultos"class="form-group">
-                  <div>
-                    <label for="asiento" class="form-label">Asiento:</label>
-                    <input type="text" name="asiento" formControlName="nombre" class="form-control" value="{{seleccion.adultos[i]}}" readonly>
+            <div id="collapseOne" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
+                <!-- Contenido de la sección -->
+                <div class="accordion-body">
+                  <div *ngFor="let formGroupMayores of informacionPasajeros.adultos_mayores.controls,let i = index" [formGroup]="formGroupMayores" class="form-group">
+                    <div>
+                      <label for="asiento" class="form-label">Asiento:</label>
+                      <input type="text" name="asiento" formControlName="nombre" class="form-control" value="{{seleccion.adultos_mayores[i]}}" readonly>
+                      
+                    </div>
+                    <div>
+                      <label for="nombre" class="form-label">Nombre:</label>
+                      <input type="text" name="nombre" formControlName="nombre" class="form-control">
+                      <label class="text-danger" *ngIf="getError(formGroupMayores.get('nombre'))">
+                        {{ getError(formGroupMayores.get('nombre')) }}
+                      </label>
+                    </div>
+                    <div>
+                      <label for="apellido" class="form-label">Apellido:</label>
+                      <input type="text" name="apellido" formControlName="apellido" class="form-control">
+                      <label class="text-danger" *ngIf="getError(formGroupMayores.get('apellido'))">
+                        {{ getError(formGroupMayores.get('apellido')) }}
+                      </label>
+                    </div>
+                    <div>
+                      <label for="nacionalidad" class="form-label">Nacionalidad:</label>
+                      <input type="text" name="nacionalidad" formControlName="nacionalidad" class="form-control">
+                      <label class="text-danger" *ngIf="getError(formGroupMayores.get('nacionalidad'))">
+                        {{ getError(formGroupMayores.get('nacionalidad')) }}
+                      </label>
+                    </div>
+                    <div>
+                      <label for="pasaporte" class="form-label">Pasaporte:</label>
+                      <input type="text" name="pasaporte" formControlName="pasaporte" class="form-control">
+                      <label class="text-danger" *ngIf="getError(formGroupMayores.get('pasaporte'))">
+                        {{ getError(formGroupMayores.get('pasaporte')) }}
+                      </label>
+                    </div>
+                    <div>
+                      <label for="fechaNacimiento" class="form-label">Fecha de nacimiento:</label>
+                      <input type="date" name="fechaNacimiento" formControlName="fechaNacimiento" class="form-control">
+                      <label class="text-danger" *ngIf="getError(formGroupMayores.get('fechaNacimiento'))">
+                        {{ getError(formGroupMayores.get('fechaNacimiento')) }}
+                      </label>
+                    </div>
+                    <br>
+                    <div class="separator" style="width: 100%; height:20px; border:0; border-top:2px solid black;"></div>
+                    <!-- <button (click)=""></button> -->
                   </div>
-                  <div>
-                    <label for="nombre" class="form-label">Nombre:</label>
-                    <input type="text" name="nombre" formControlName="nombre" class="form-control">
-                    <label class="text-danger" *ngIf="getError(formGroupAdultos.get('nombre'))">
-                      {{ getError(formGroupAdultos.get('nombre')) }}
-                    </label>
-                  </div>
-                  <div>
-                    <label for="apellido" class="form-label">Apellido:</label>
-                    <input type="text" name="apellido" formControlName="apellido" class="form-control">
-                    <label class="text-danger" *ngIf="getError(formGroupAdultos.get('apellido'))">
-                      {{ getError(formGroupAdultos.get('apellido')) }}
-                    </label>
-                  </div>
-                  <div>
-                    <label for="nacionalidad" class="form-label">Nacionalidad:</label>
-                    <input type="text" name="nacionalidad" formControlName="nacionalidad" class="form-control">
-                    <label class="text-danger" *ngIf="getError(formGroupAdultos.get('nacionalidad'))">
-                      {{ getError(formGroupAdultos.get('nacionalidad')) }}
-                    </label>
-                  </div>
-                  <div>
-                    <label for="pasaporte" class="form-label">Pasaporte:</label>
-                    <input type="text" name="pasaporte" formControlName="pasaporte" class="form-control">
-                    <label class="text-danger" *ngIf="getError(formGroupAdultos.get('pasaporte'))">
-                      {{ getError(formGroupAdultos.get('pasaporte')) }}
-                    </label>
-                  </div>
-                  <div>
-                    <label for="fechaNacimiento" class="form-label">Fecha de nacimiento:</label>
-                    <input type="date" name="fechaNacimiento" formControlName="fechaNacimiento" class="form-control">
-                    <label class="text-danger" *ngIf="getError(formGroupAdultos.get('fechaNacimiento'))">
-                      {{ getError(formGroupAdultos.get('fechaNacimiento')) }}
-                    </label>
-                  </div>
-                  <br>
-                  <div class="separator" style="width: 100%; height:20px; border:0; border-top:2px solid black;"></div>
-                  <!-- <button (click)=""></button> -->
-                </div>
+              </div>
             </div>
           </div>
-        </div>
-        <div class="accordion-item" *ngIf="pasajeros.ninos>0">
-            <h2 class="accordion-header" id="headingThree">
-              <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseOne">
-                Niños {{pasajeros.ninos}}
-              </button>
-            </h2>
-            <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree" data-bs-parent="#accordionExample">
-              <div class="accordion-body">
-                <div *ngFor="let formGroupNinos of informacionPasajeros.ninos.controls,let i = index" [formGroup]="formGroupNinos"class="form-group">
-                  <div>
-                    <label for="asiento" class="form-label">Asiento:</label>
-                    <input type="text" name="asiento" formControlName="nombre" class="form-control" value="{{seleccion.ninos[i]}}" readonly>
+          <div class="accordion-item" *ngIf="pasajeros.adultos>0">
+              <h2 class="accordion-header" id="headingTwo">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseOne">
+                  Adultos {{pasajeros.adultos}}
+                </button>
+              </h2>
+              <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#accordionExample">
+                <div class="accordion-body">
+                  <div *ngFor="let formGroupAdultos of informacionPasajeros.adultos.controls,let i = index" [formGroup]="formGroupAdultos"class="form-group">
+                    <div>
+                      <label for="asiento" class="form-label">Asiento:</label>
+                      <input type="text" name="asiento" formControlName="nombre" class="form-control" value="{{seleccion.adultos[i]}}" readonly>
+                    </div>
+                    <div>
+                      <label for="nombre" class="form-label">Nombre:</label>
+                      <input type="text" name="nombre" formControlName="nombre" class="form-control">
+                      <label class="text-danger" *ngIf="getError(formGroupAdultos.get('nombre'))">
+                        {{ getError(formGroupAdultos.get('nombre')) }}
+                      </label>
+                    </div>
+                    <div>
+                      <label for="apellido" class="form-label">Apellido:</label>
+                      <input type="text" name="apellido" formControlName="apellido" class="form-control">
+                      <label class="text-danger" *ngIf="getError(formGroupAdultos.get('apellido'))">
+                        {{ getError(formGroupAdultos.get('apellido')) }}
+                      </label>
+                    </div>
+                    <div>
+                      <label for="nacionalidad" class="form-label">Nacionalidad:</label>
+                      <input type="text" name="nacionalidad" formControlName="nacionalidad" class="form-control">
+                      <label class="text-danger" *ngIf="getError(formGroupAdultos.get('nacionalidad'))">
+                        {{ getError(formGroupAdultos.get('nacionalidad')) }}
+                      </label>
+                    </div>
+                    <div>
+                      <label for="pasaporte" class="form-label">Pasaporte:</label>
+                      <input type="text" name="pasaporte" formControlName="pasaporte" class="form-control">
+                      <label class="text-danger" *ngIf="getError(formGroupAdultos.get('pasaporte'))">
+                        {{ getError(formGroupAdultos.get('pasaporte')) }}
+                      </label>
+                    </div>
+                    <div>
+                      <label for="fechaNacimiento" class="form-label">Fecha de nacimiento:</label>
+                      <input type="date" name="fechaNacimiento" formControlName="fechaNacimiento" class="form-control">
+                      <label class="text-danger" *ngIf="getError(formGroupAdultos.get('fechaNacimiento'))">
+                        {{ getError(formGroupAdultos.get('fechaNacimiento')) }}
+                      </label>
+                    </div>
+                    <br>
+                    <div class="separator" style="width: 100%; height:20px; border:0; border-top:2px solid black;"></div>
+                    <!-- <button (click)=""></button> -->
                   </div>
-                  <div>
-                    <label for="nombre" class="form-label">Nombre:</label>
-                    <input type="text" name="nombre" formControlName="nombre" class="form-control">
-                    <label class="text-danger" *ngIf="getError(formGroupNinos.get('nombre'))">
-                      {{ getError(formGroupNinos.get('nombre')) }}
-                    </label>
-                  </div>
-                  <div>
-                    <label for="apellido" class="form-label">Apellido:</label>
-                    <input type="text" name="apellido" formControlName="apellido" class="form-control">
-                    <label class="text-danger" *ngIf="getError(formGroupNinos.get('apellido'))">
-                      {{ getError(formGroupNinos.get('apellido')) }}
-                    </label>
-                  </div>
-                  <div>
-                    <label for="nacionalidad" class="form-label">Nacionalidad:</label>
-                    <input type="text" name="nacionalidad" formControlName="nacionalidad" class="form-control">
-                    <label class="text-danger" *ngIf="getError(formGroupNinos.get('nacionalidad'))">
-                      {{ getError(formGroupNinos.get('nacionalidad')) }}
-                    </label>
-                  </div>
-                  <div>
-                    <label for="pasaporte" class="form-label">Pasaporte:</label>
-                    <input type="text" name="pasaporte" formControlName="pasaporte" class="form-control">
-                    <label class="text-danger" *ngIf="getError(formGroupNinos.get('pasaporte'))">
-                      {{ getError(formGroupNinos.get('pasaporte')) }}
-                    </label>
-                  </div>
-                  <div>
-                    <label for="fechaNacimiento" class="form-label">Fecha de nacimiento:</label>
-                    <input type="date" name="fechaNacimiento" formControlName="fechaNacimiento" class="form-control">
-                    <label class="text-danger" *ngIf="getError(formGroupNinos.get('fechaNacimiento'))">
-                      {{ getError(formGroupNinos.get('fechaNacimiento')) }}
-                    </label>
-                  </div>
-                  <br>
-                  <div class="separator" style="width: 100%; height:20px; border:0; border-top:2px solid black;"></div>
-                  <!-- <button (click)=""></button> -->
-                </div>
+              </div>
             </div>
           </div>
-        </div>
-        <div class="accordion-item" *ngIf="pasajeros.infantes>0">
-            <h2 class="accordion-header" id="headingFour">
-              <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFour" aria-expanded="false" aria-controls="collapseOne">
-                Infantes {{pasajeros.infantes}}
-              </button>
-            </h2>
-            <div id="collapseFour" class="accordion-collapse collapse" aria-labelledby="headingFour" data-bs-parent="#accordionExample">
-              <div class="accordion-body">
-                <div *ngFor="let formGroupInfantes of informacionPasajeros.infantes.controls,let i = index" [formGroup]="formGroupInfantes"class="form-group">
-                  <div>
-                    <label for="asiento" class="form-label">Asiento:</label>
-                    <input type="text" name="asiento" formControlName="nombre" class="form-control" value="{{seleccion.infantes[i]}}" readonly>
+          <div class="accordion-item" *ngIf="pasajeros.ninos>0">
+              <h2 class="accordion-header" id="headingThree">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseOne">
+                  Niños {{pasajeros.ninos}}
+                </button>
+              </h2>
+              <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree" data-bs-parent="#accordionExample">
+                <div class="accordion-body">
+                  <div *ngFor="let formGroupNinos of informacionPasajeros.ninos.controls,let i = index" [formGroup]="formGroupNinos"class="form-group">
+                    <div>
+                      <label for="asiento" class="form-label">Asiento:</label>
+                      <input type="text" name="asiento" formControlName="nombre" class="form-control" value="{{seleccion.ninos[i]}}" readonly>
+                    </div>
+                    <div>
+                      <label for="nombre" class="form-label">Nombre:</label>
+                      <input type="text" name="nombre" formControlName="nombre" class="form-control">
+                      <label class="text-danger" *ngIf="getError(formGroupNinos.get('nombre'))">
+                        {{ getError(formGroupNinos.get('nombre')) }}
+                      </label>
+                    </div>
+                    <div>
+                      <label for="apellido" class="form-label">Apellido:</label>
+                      <input type="text" name="apellido" formControlName="apellido" class="form-control">
+                      <label class="text-danger" *ngIf="getError(formGroupNinos.get('apellido'))">
+                        {{ getError(formGroupNinos.get('apellido')) }}
+                      </label>
+                    </div>
+                    <div>
+                      <label for="nacionalidad" class="form-label">Nacionalidad:</label>
+                      <input type="text" name="nacionalidad" formControlName="nacionalidad" class="form-control">
+                      <label class="text-danger" *ngIf="getError(formGroupNinos.get('nacionalidad'))">
+                        {{ getError(formGroupNinos.get('nacionalidad')) }}
+                      </label>
+                    </div>
+                    <div>
+                      <label for="pasaporte" class="form-label">Pasaporte:</label>
+                      <input type="text" name="pasaporte" formControlName="pasaporte" class="form-control">
+                      <label class="text-danger" *ngIf="getError(formGroupNinos.get('pasaporte'))">
+                        {{ getError(formGroupNinos.get('pasaporte')) }}
+                      </label>
+                    </div>
+                    <div>
+                      <label for="fechaNacimiento" class="form-label">Fecha de nacimiento:</label>
+                      <input type="date" name="fechaNacimiento" formControlName="fechaNacimiento" class="form-control">
+                      <label class="text-danger" *ngIf="getError(formGroupNinos.get('fechaNacimiento'))">
+                        {{ getError(formGroupNinos.get('fechaNacimiento')) }}
+                      </label>
+                    </div>
+                    <br>
+                    <div class="separator" style="width: 100%; height:20px; border:0; border-top:2px solid black;"></div>
+                    <!-- <button (click)=""></button> -->
                   </div>
-                  <div>
-                    <label for="nombre" class="form-label">Nombre:</label>
-                    <input type="text" name="nombre" formControlName="nombre" class="form-control">
-                    <label class="text-danger" *ngIf="getError(formGroupInfantes.get('nombre'))">
-                      {{ getError(formGroupInfantes.get('nombre')) }}
-                    </label>
-                  </div>
-                  <div>
-                    <label for="apellido" class="form-label">Apellido:</label>
-                    <input type="text" name="apellido" formControlName="apellido" class="form-control">
-                    <label class="text-danger" *ngIf="getError(formGroupInfantes.get('apellido'))">
-                      {{ getError(formGroupInfantes.get('apellido')) }}
-                    </label>
-                  </div>
-                  <div>
-                    <label for="nacionalidad" class="form-label">Nacionalidad:</label>
-                    <input type="text" name="nacionalidad" formControlName="nacionalidad" class="form-control">
-                    <label class="text-danger" *ngIf="getError(formGroupInfantes.get('nacionalidad'))">
-                      {{ getError(formGroupInfantes.get('nacionalidad')) }}
-                    </label>
-                  </div>
-                  <div>
-                    <label for="pasaporte" class="form-label">Pasaporte:</label>
-                    <input type="text" name="pasaporte" formControlName="pasaporte" class="form-control">
-                    <label class="text-danger" *ngIf="getError(formGroupInfantes.get('pasaporte'))">
-                      {{ getError(formGroupInfantes.get('pasaporte')) }}
-                    </label>
-                  </div>
-                  <div>
-                    <label for="fechaNacimiento" class="form-label">Fecha de nacimiento:</label>
-                    <input type="date" name="fechaNacimiento" formControlName="fechaNacimiento" class="form-control">
-                    <label class="text-danger" *ngIf="getError(formGroupInfantes.get('fechaNacimiento'))">
-                      {{ getError(formGroupInfantes.get('fechaNacimiento')) }}
-                    </label>
-                  </div>
-                  <br>
-                  <div class="separator" style="width: 100%; height:20px; border:0; border-top:2px solid black;"></div>
-                  <!-- <button (click)=""></button> -->
-                </div>
+              </div>
             </div>
           </div>
+          <div class="accordion-item" *ngIf="pasajeros.infantes>0">
+              <h2 class="accordion-header" id="headingFour">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFour" aria-expanded="false" aria-controls="collapseOne">
+                  Infantes {{pasajeros.infantes}}
+                </button>
+              </h2>
+              <div id="collapseFour" class="accordion-collapse collapse" aria-labelledby="headingFour" data-bs-parent="#accordionExample">
+                <div class="accordion-body">
+                  <div *ngFor="let formGroupInfantes of informacionPasajeros.infantes.controls,let i = index" [formGroup]="formGroupInfantes"class="form-group">
+                    <div>
+                      <label for="asiento" class="form-label">Asiento:</label>
+                      <input type="text" name="asiento" formControlName="nombre" class="form-control" value="{{seleccion.infantes[i]}}" readonly>
+                    </div>
+                    <div>
+                      <label for="nombre" class="form-label">Nombre:</label>
+                      <input type="text" name="nombre" formControlName="nombre" class="form-control">
+                      <label class="text-danger" *ngIf="getError(formGroupInfantes.get('nombre'))">
+                        {{ getError(formGroupInfantes.get('nombre')) }}
+                      </label>
+                    </div>
+                    <div>
+                      <label for="apellido" class="form-label">Apellido:</label>
+                      <input type="text" name="apellido" formControlName="apellido" class="form-control">
+                      <label class="text-danger" *ngIf="getError(formGroupInfantes.get('apellido'))">
+                        {{ getError(formGroupInfantes.get('apellido')) }}
+                      </label>
+                    </div>
+                    <div>
+                      <label for="nacionalidad" class="form-label">Nacionalidad:</label>
+                      <input type="text" name="nacionalidad" formControlName="nacionalidad" class="form-control">
+                      <label class="text-danger" *ngIf="getError(formGroupInfantes.get('nacionalidad'))">
+                        {{ getError(formGroupInfantes.get('nacionalidad')) }}
+                      </label>
+                    </div>
+                    <div>
+                      <label for="pasaporte" class="form-label">Pasaporte:</label>
+                      <input type="text" name="pasaporte" formControlName="pasaporte" class="form-control">
+                      <label class="text-danger" *ngIf="getError(formGroupInfantes.get('pasaporte'))">
+                        {{ getError(formGroupInfantes.get('pasaporte')) }}
+                      </label>
+                    </div>
+                    <div>
+                      <label for="fechaNacimiento" class="form-label">Fecha de nacimiento:</label>
+                      <input type="date" name="fechaNacimiento" formControlName="fechaNacimiento" class="form-control">
+                      <label class="text-danger" *ngIf="getError(formGroupInfantes.get('fechaNacimiento'))">
+                        {{ getError(formGroupInfantes.get('fechaNacimiento')) }}
+                      </label>
+                    </div>
+                    <br>
+                    <div class="separator" style="width: 100%; height:20px; border:0; border-top:2px solid black;"></div>
+                    <!-- <button (click)=""></button> -->
+                  </div>
+              </div>
+            </div>
+          </div>
+      </div>
+      </div>
+
+      <div *ngIf="asientoVal">
+        <div class="maletas-container">
+          <div class="d-flex align-items-center">
+            <i class="fa fa-suitcase maletas-icon"></i> 
+            <span class="maletas-amount">{{ numeroMaletas }}</span>
+          </div>
+          <div class="maletas-buttons">
+            <button (click)="decrementarMaletas()" class="maletas-button">-</button>
+            <button (click)="incrementarMaletas()" class="maletas-button">+</button>
+          </div>
+          <p class="mt-2">Monto por maleta: $65 dólares</p>
         </div>
-    </div>
+        <div class="d-flex justify-content-center align-items-center" style="height: 100px;">
+          <button (click)="guardarPasajeros()" class="continuar-button">
+            <i class="fa fa-arrow-right continuar-icon"></i> CONTINUAR
+          </button>
+        </div>
+        
+      </div>
+      
+
+      </div>
     <div>
-      <button (click)="guardarPasajeros()" class="btn btn-primary">CONTINUAR</button>
-    </div>
+      
   </div>  
   

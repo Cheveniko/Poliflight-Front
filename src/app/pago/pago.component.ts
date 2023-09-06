@@ -16,6 +16,7 @@ export class PagoComponent implements OnInit {
   public info: any;
   correo: any;
   persona: any;
+  maleta:number = 0;
 
 
 
@@ -45,10 +46,12 @@ export class PagoComponent implements OnInit {
     this.info.forEach((element:any)=>{
       console.log(element.precio_total);
       this.subscriptionPrice = this.subscriptionPrice + element.precio_total;
+      this.maleta = this.maleta + element.maletas;
     });
-    console.log(this.subscriptionPrice)
+    this.maleta = parseFloat(this.maleta.toFixed(2)) * 65;
+    console.log("maleta: ",this.maleta)
     
-    this.subscriptionPrice = parseFloat(this.subscriptionPrice)+(parseFloat(this.subscriptionPrice)*0.12);
+    this.subscriptionPrice = (parseFloat(this.subscriptionPrice)+(parseFloat(this.subscriptionPrice)*0.12)) + this.maleta;
     this.subscriptionPrice = parseFloat(this.subscriptionPrice.toFixed(2));
     console.log(this.subscriptionPrice)
     this.initConfig();
